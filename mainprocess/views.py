@@ -165,12 +165,19 @@ def budprofile(request,slug):
 
 def sendrequest(request,receiver):
     receiver_user = Profile.objects.get(username=receiver)
-    print("---------------------",receiver_user,"------------------------")
     sender=request.user
-    print("---------------------",sender)
-    connection=ConnectRequest(sender=sender,
+    sender_user=Profile.objects.get(username=sender.username)
+    obj,created=ConnectRequest.objects.get_or_create(sender=sender_user,
         receiver=receiver_user,
         status="Pending"
     )
-    connection.save()
     return redirect("buddylist")
+
+def cancelrequest(request):
+    pass
+
+def acceptrequest(request):
+    pass
+
+def declinerequest(request):
+    pass

@@ -13,7 +13,7 @@
                     <a class="btn btn-primary" href="/bud/{{bud.username}}">view Profile</a>
                     <p class="card-text">{{bud.email}};</p>
                     <p class="card-text">{{bud.category}}<p>
-                    <a class="btn btn-outline-success" href="/sendrequest/{{bud.username}}">Connect</a>
+                    <a class="btn btn-outline-success" id="demo" onclick="myFunction()" href="/sendrequest/{{bud.username}}">Connect</a>
                 </div>
             </div>
         </div>    
@@ -22,4 +22,12 @@
 </div>
 
 </div>
+{% endblock %}
+{% block script %}
+<script>
+    function myFunction() {
+      document.getElementById("demo").style.color = "red";
+      document.getElementById("demo").innerHTML="Cancel Request";
+    }
+    </script>
 {% endblock %}

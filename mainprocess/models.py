@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.conf import settings
 
 # Create your models here.
 class Profile(models.Model):
@@ -25,7 +27,22 @@ class Profile(models.Model):
     category=models.CharField(max_length=15,choices=choice,blank=True)
 
     def __str__(self):
-        return self.name
+        return self.username
+
+class ConnectRequest(models.Model):
+    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name="sender")
+    receiver = models.ForeignKey(User,on_delete=models.CASCADE, related_name="receiver")
+    choice=(
+        ("Accepted","Accepted"),
+        ("Declined","Declined"),
+        ("Pending","Pending")
+    )
+    status=models.CharField(max_length=10,choices=choice,blank=True)
+    
+    def __str__(self):
+        return f"{self.sender} to {self.receiver} status {self.status}"
+
+
 
 class C(models.Model):
     qno=models.AutoField(primary_key=True)

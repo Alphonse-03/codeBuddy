@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import login,logout,authenticate
-from .models import Profile,C,Cpp,Java,Python
+from .models import Profile,C,Cpp,Java,Python,ConnectRequest
 import random 
 # Create your views here.
 def home(request):
@@ -162,3 +162,15 @@ def budprofile(request,slug):
     bud=Profile.objects.filter(username=slug).first()
     
     return render(request,"code/budprofile.html",{'bud':bud})
+
+def sendrequest(request,receiver):
+    receiver_user = Profile.objects.get(username=receiver)
+    print("---------------------",receiver_user,"------------------------")
+    sender=request.user
+    print("---------------------",sender)
+    connection=ConnectRequest(sender=sender,
+        receiver=receiver_user,
+        status="Pending"
+    )
+    connection.save()
+    return redirect("buddylist")

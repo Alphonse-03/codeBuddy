@@ -5,15 +5,16 @@ from django.contrib.auth import login,logout,authenticate
 from .models import Profile,C,Cpp,Java,Python,ConnectRequest
 import random 
 # Create your views here.
+
 def home(request):
     if request.user.is_authenticated:
         n=request.user
-        print(f"{n} at home")
+      
         i=Profile.objects.filter(username=n).first().intrest
         m=Profile.objects.filter(username=n).first().marks
-        print(i,m)
+  
         if i=='' or m==0:
-            print("whyyyyyyy")
+          
             return redirect("timeline")
         else:
             return redirect("profile")
@@ -23,13 +24,12 @@ def home(request):
 def timeline(request):
     n=request.user
     i=Profile.objects.filter(username=n).first().intrest
-    print(i)
+
     m=Profile.objects.filter(username=n).first().marks
     if i =='':
-        print("aaaaaaaaaaaa")
         if request.method=="POST":
             choice=request.POST['choice']
-            print(choice)
+          
             Profile.objects.filter(username=n).update(intrest=choice) 
             return redirect("test")
         return render(request,"code/choice.html")
@@ -49,7 +49,7 @@ def test(request):
             que=Java.objects.all()
         if choice=='Python':
             que=Python.objects.all()
-        print(choice)
+        
         quesitions=[]
         un=['a','b','c','d','e','f','g','h','i','j']
         #un=['a','b','c']
@@ -124,7 +124,7 @@ def registerhandle(request):
 
         if pass1 == pass2:
             userr=User.objects.create_user(username,email,pass1)
-            print(userr)
+           
             userr.first_name=fname
             userr.last_name=lname
             userr.save()
@@ -173,11 +173,27 @@ def sendrequest(request,receiver):
     )
     return redirect("buddylist")
 
-def cancelrequest(request):
-    pass
+def requestlist(request):
+    connectionlist=ConnectRequest.objects.all()
+    receiver=request.user.username
+    cList=[]
+    for connection in connectionlist:
+        if connection.receiver.username == receiver:
+            cList.append(connection.sender.username)
+
+    return render(request,"code/pendinglist.html",{'connectionlist':cList})
 
 def acceptrequest(request):
     pass
 
-def declinerequest(request):
-    pass
+def declinerequest(request,slug):
+    sender=slug
+    receiver=request.user.username
+    cl=ConnectRequest.objects.all()
+    idn=0
+    for c in cl:
+        if c.receiver.username==receiver and c.sender.username==slug:
+            idn=c.idno
+    print(idn)
+    ConnectRequest.objects.filter(idno=idn).delete()
+    return redirect("requestlist")

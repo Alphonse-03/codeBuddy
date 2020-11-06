@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block body %}
 <div class="container my-3">
+  <a href="{% url 'requestlist' %}" class="btn btn-outline-success">Check connection requests</a><br>
     {{name}}<br>
       {{username}}<br>
     {{intrest}}<br>

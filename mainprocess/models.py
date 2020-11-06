@@ -30,14 +30,16 @@ class Profile(models.Model):
         return self.username
 
 class ConnectRequest(models.Model):
+    idno = models.AutoField(primary_key=True)
     sender = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="sender")
     receiver = models.ForeignKey(Profile,on_delete=models.CASCADE, related_name="receiver")
+    
     choice=(
         ("Accepted","Accepted"),
         ("Declined","Declined"),
         ("Pending","Pending")
     )
-    
+
     status=models.CharField(max_length=10,choices=choice,blank=True)
     
     def __str__(self):

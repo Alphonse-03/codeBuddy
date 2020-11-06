@@ -10,6 +10,8 @@ urlpatterns = [
     path('registerhandle',views.registerhandle,name="registerhandle"),
     path('logouthandle',views.logouthandle,name="logouthandle"),
     path('buddylist',views.buddylist,name="buddylist"),
+    path('requestlist',views.requestlist,name="requestlist"),
     path('bud/<str:slug>',views.budprofile,name="budprofile"),
     path('sendrequest/<str:receiver>',views.sendrequest,name="sendrequest"),
+    path('declinerequest/<str:slug>',views.declinerequest,name="declinerequest"),
 ]

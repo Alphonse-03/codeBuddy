@@ -13,7 +13,26 @@
                     <a class="btn btn-primary" href="/bud/{{bud.username}}">view Profile</a>
                     <p class="card-text">{{bud.email}};</p>
                     <p class="card-text">{{bud.category}}<p>
-                    <a class="btn btn-outline-success" id="demo" onclick="myFunction()" href="/sendrequest/{{bud.username}}">Connect</a>
+                    <a class="btn btn-outline-success" id="demo" href="/sendrequest/{{bud.username}}/{{sub}}">Connect</a>
+                </div>
+            </div>
+        </div>    
+  
+{% endfor %}
+
+
+{% for bud in pending_list %} 
+   
+        <div class="col col-xs-12 col-sm-12 col-md-6 col-lg-6">
+
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+
+                    <h5 class="card-title">{{bud.name}}</h5>
+                    <a class="btn btn-primary" href="/bud/{{bud.username}}">view Profile</a>
+                    <p class="card-text">{{bud.email}};</p>
+                    <p class="card-text">{{bud.category}}<p>
+                    <a class="btn btn-outline-danger" id="demo" href="/cancelrequest/{{bud.username}}/{{sub}}">Remove connection</a>
                 </div>
             </div>
         </div>    
@@ -22,12 +41,6 @@
 </div>
 
 </div>
-{% endblock %}
-{% block script %}
-<script>
-    function myFunction() {
-      document.getElementById("demo").style.color = "red";
-      document.getElementById("demo").innerHTML="Cancel Request";
-    }
-    </script>
+
+
 {% endblock %}

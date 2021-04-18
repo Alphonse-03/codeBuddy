@@ -2,13 +2,22 @@
 {% block body %}
 <div class="container my-3">
   <a href="{% url 'requestlist' %}" class="btn btn-outline-success">Check connection requests</a><br>
-    {{name}}<br>
-      {{username}}<br>
-    {{intrest}}<br>
-    {{marks}}<br>
-    {{email}}<br>
-    you have been appointed the league : {{category}}<br>
-    <a class="btn btn-outline-dark" href="{% url 'buddylist' %}">Find your Buddies</a>
+    {{user}}<br>
+      {{user.email}}<br>
+   {% for test in tests%}
+   {{test.Intrest}}:::{{test.category}}<br>
+
+   {% endfor %}
+   {% for test in tests%}
+  
+   <a class="btn btn-outline-dark" href="buddylist/{{test.Intrest}}">Find your Buddies in {{test.Intrest}}</a><br>
+   {% endfor %}
+   <a class="btn btn-outline-dark" href="friendlist">View Your Friends</a><br>
+    appear for requestlist:
+    {% for option in options %}
+    <a class="btn btn-outline-dark" href="retest/{{option.choice}}">{{option.choice}}</a><br>
+    {% endfor %}
+
 </div>
   
   {% endblock %}

@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 {% block body %}
 <div class="container">
-    <form action="test" method="POST">
+    <form action="{% url 'acceptAnswer' %}" method="POST">
         {% csrf_token %}
         {% for key, value in questions.items %} 
         
         
-        {{value.qno}}){{value.question}}
+        {{key}}){{value.question}}
         <br>
         <input type="radio" id="1" name="{{key}}" value="1">:{{value.option1}}<br>
         <input type="radio" id="2" name="{{key}}" value="2">:{{value.option2}}<br>

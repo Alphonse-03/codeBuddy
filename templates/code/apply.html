@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="container my-3">
+    <div class="row">
+        {% for job in jobs %} 
+   
+        <div class="col col-xs-12 col-sm-12 col-md-6 col-lg-6">
+
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+
+                    <h5 class="card-title">{{job.name}}</h5>
+                    <p class="card-text">{{job.jTitle}}</p>
+                    <p class="card-text">{{job.location}}<p>
+                    <a class="btn btn-outline-success" id="demo" href="/sendrequest/{{bud.username}}/{{sub}}">Connect</a>
+                </div>
+            </div>
+        </div>    
+  
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends 'jobbase.html' %}
+{% block body %}
+
+
+<a class="btn btn-outline-dark" href="{% url 'jobDeclaration' %}">Add a Job!</a><br>
+<div class="w3-container">
+
+
+
+    {% if verifiedJobs %}
+    {% for v in verifiedJobs %}
+    <blockquote class="w3-panel w3-leftbar w3-light-grey">
+        companyname::::::::::::::::::::::::{{v.companyname}}<br>
+        jobDescription:::::::::::::::::::::{{v.jobDescription}}<br>
+        salary::::::::::::::::::::::::{{v.expectedSalary}}<br>
+        <a class="btn btn-info" id="demo" href="/findppl/{{v.id}}">Find People</a>
+        <a class="btn btn-info" id="demo" href="/seeapplicants/{{v.id}}">See Applicants</a>
+        <a class="btn btn-info" id="demo" href="/confirmedppl/{{v.id}}">See Confimed People</a>
+    </blockquote>
+    {% endfor %}
+    {% else %}
+    Sorry,No verified Job Exists
+    {% endif %}
+
+
+
+
+
+
+
+
+
+
+    {% if pendingJobs %}
+    
+pendingJobs :----
+<br>
+    {% for v in pendingJobs %}
+    <blockquote class="w3-panel w3-leftbar w3-light-grey">
+        companyname::::::::::::::::::::::::{{v.companyname}}<br>
+        jobDescription:::::::::::::::::::::{{v.jobDescription}}<br>
+        salary::::::::::::::::::::::::{{v.expectedSalary}}<br>
+    </blockquote>
+    {% endfor %}
+    {% else %}
+    Sorry,No verified Job Exists
+
+    {% endif %}
+
+
+</div>
+
+
+</div>
+
+{% endblock %}

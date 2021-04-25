@@ -1,0 +1,42 @@
+{% extends 'jobbase.html' %}
+{% block body %}
+<!-- <div class="container my-3">
+  <h3>Job request</h3>
+  {% for p in ppl %}
+    <div style="height:20px;">declinerequest/{{connection}}
+
+        <div class="w3-container">acceptrequest/{{connection}}
+          
+          
+          <h5>{{p.Applicants.username}}</h5>
+        
+         
+        </div>
+        
+        </div>
+        {% endfor %}
+</div> -->
+<div class="container my-3">
+  <div class="row">
+    {% if ppl %}
+    {% for p in ppl %}
+ 
+      <div class="col col-xs-12 col-sm-12 col-md-6 col-lg-6">
+
+          <div class="card" style="width: 18rem;">
+              <div class="card-body">
+
+                  <h5 class="card-title">{{p.Applicants.username}}</h5>
+                  <img class="center" src="https://www.w3schools.com/w3css/img_avatar3.png" alt="Avatar" style="width:60%;height:60%"><br>
+                  <a class="w3-button w3-green" href="/accept/{{slug}}/{{p.Applicants.username}}">Accept</a>
+                  <a class="w3-button w3-red" href="/reject/{{slug}}/{{p.Applicants.username}}">Decline</a>
+                   <a class="btn btn-primary" href="/bud/{{p.Applicants.username}}">view Profile</a>
+              </div>
+          </div>
+      </div>    
+
+{% endfor %}
+{% else %}
+<h1>No request at the movement</h1>
+{% endif %}
+{% endblock %}

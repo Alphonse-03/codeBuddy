@@ -1,0 +1,27 @@
+{% extends 'jobbase.html' %}
+{% block body %}
+
+<div class="container">
+<form action="jobDeclaration" method="POST">
+    {% csrf_token %}
+   
+        <div class="form-group">
+          <label for="companyname">Company Name*</label>
+          <input type="text" name="companyname" class="form-control" id="companyname" required>
+        </div>
+        <div class="form-group">
+            <label for="jd">Job Description*</label>
+            <textarea class="form-control" id="jd" name="jd" rows="6" required></textarea>
+          </div>
+          <h6>Do you want to expose the salary?Its not mandatory.</h6>
+
+        <div class="form-group">
+            <label for="expectedSalary">Expected Salary</label>
+            <input type="text" name="expectedSalary" class="form-control" id="expectedSalary">
+          </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+
+</form>
+</div>
+
+{% endblock %}

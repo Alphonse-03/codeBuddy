@@ -1,0 +1,72 @@
+{% extends 'jobbase.html' %}
+{% block body %}
+
+
+
+
+
+<div >
+    <style>
+        /* Style to center grid column */
+        .col-centered{
+            float: none;
+            margin: 0 auto;
+        }
+        
+        /* Some custom styles to beautify this example */
+        .row{
+            background: #dbdfe5;
+        }
+        .demo-content{
+            padding: 25px;
+            font-size: 18px;
+            background: #abb1b8;
+        }
+    </style>
+    <h2>Registration List</h2>
+   
+            
+            <div class="container my-3 bg-light">
+                <div class="col-md-12 text-center">
+                    <div class="table-wrapper">
+                        <form method='get'>
+                            {{myFilter.form}}
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+              </div>
+            </div> 
+        
+        <table class="fl-table">
+            <thead>
+
+                <tr>
+
+                    <th>Name</th>
+                    <th>Intrest</th>
+                    <th>Marks</th>
+                    <th>Category</th>
+                    <th>Send Request</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for i in Intrestss %}
+        <tr>
+            <td>{{i.user}}</td>
+            <td>{{i.Intrest}}</td>
+            <td>{{i.marks}}</td>
+            <td>{{i.category}}</td>
+            <td></span></a><a href="addapplicant/{{slug}}/{{i.user}}" class="btn btn-outline-dark"><span class="material-icons">
+                person_add_alt_1
+                </span></a></td>
+
+        </tr>
+        {% endfor %}
+
+
+
+            <tbody>
+        </table>
+    </div>
+    {% endblock %}
+</div>

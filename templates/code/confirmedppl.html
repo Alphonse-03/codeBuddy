@@ -1,0 +1,26 @@
+{% extends 'jobbase.html' %}
+{% block body %}
+<div class="container my-3">
+    <div class="row">
+        {% for confirm in confirmedppl %} 
+   
+        <div class="col col-xs-12 col-sm-12 col-md-6 col-lg-6">
+
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+
+                    <h5 class="card-title">{{confirm.Applicants.username}}</h5>
+                    <a class="btn btn-primary" href="/bud/{{confirm.Applicants.username}}">view Profile</a>
+                    <p class="card-text">{{confirm.Applicants.email}};</p>
+                    
+                    <a class="btn btn-info" id="demo" href="/chat/{{confirm.Applicants.username}}">Message</a>
+                </div>
+            </div>
+        </div>    
+  
+{% endfor %}
+
+</div>
+
+</div>
+{% endblock %}

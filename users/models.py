@@ -12,7 +12,9 @@ class Profile(models.Model):
     name=models.CharField(max_length=30)
     email=models.CharField(max_length=40)
     username=models.CharField(max_length=30,unique=True)
-    resume = models.FileField(upload_to='resume/',null=True,blank=True)
+    dp = models.FileField(upload_to='dp/',null=True,blank=True)
+    dplink = models.CharField(max_length=70,null=True,blank=True)
+    
    
     def __str__(self):
         return self.username
@@ -35,9 +37,9 @@ class JobProfile(models.Model):
 class JobPortal(models.Model):
     name=models.ForeignKey(JobProfile,on_delete=models.CASCADE,related_name="jobp")
     companyname=models.CharField(max_length=30)
-    jTitle=models.TextField(blank=True,null=True)
-    location=models.TextField(blank=True,null=True)
-    noOfApplicants=models.TextField(blank=True,null=True,default=0)
+    jTitle=models.CharField(blank=True,null=True,max_length=50)
+    location=models.CharField(blank=True,null=True,max_length=30)
+    noOfApplicants=models.CharField(blank=True,null=True,default=0,max_length=10)
     jobDescription=models.TextField()
   
     expectedSalary=models.CharField(max_length=20,blank=True,default="Declined to say")
@@ -59,6 +61,9 @@ class Applicants(models.Model):
     Applicants=models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="applicant")
     message=models.TextField(blank=True,null=True)
     ApplyingTo=models.ForeignKey(JobPortal, on_delete=models.CASCADE, related_name="JobPortal")
+    resume = models.FileField(upload_to='documents/',null=True,blank=True)
+    resumeli = models.CharField(max_length=70,null=True,blank=True)
+
     choice=(
         ("Accepted","Accepted"),
         ("Declined","Declined"),

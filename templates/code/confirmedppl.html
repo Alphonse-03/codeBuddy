@@ -2,6 +2,7 @@
 {% block body %}
 <div class="container my-3">
     <div class="row">
+        {% if confirmedppl %}
         {% for confirm in confirmedppl %} 
    
         <div class="col col-xs-12 col-sm-12 col-md-6 col-lg-6">
@@ -19,7 +20,9 @@
         </div>    
   
 {% endfor %}
-
+{% else %}
+<h3>No Confirmed People</h3>
+{% endif %}
 </div>
 
 </div>

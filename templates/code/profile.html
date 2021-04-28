@@ -1,6 +1,102 @@
 {% extends 'base.html' %}
 {% block body %}
 <div class="container my-3">
+  <div class="row">
+    <div class="col-sm">
+
+
+      <img src={{user.dplink}}
+        alt="">
+      <a href="{% url 'uploaddp' %}" style="margin-left: 130px;">upload new dp</a>
+    </div>
+    <div class="col-sm">
+      <br>
+      <h3>{{user}}<br></h3>
+      <br>
+      <h5>{{user.email}}<br></h5>
+      <br>
+      <div class="card" style="width: 18rem;">
+        <div class="card-body">
+          {% for test in tests%}
+          <h6 class="card-title">{{test.Intrest}} => {{test.category}} <i class="material-icons md-18">verified</i>
+          </h6>
+          <br>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    <div class="col-sm">
+      <a class="btn btn-outline-dark" href="/apply" style="
+      margin-bottom: 10px;  ">Apply For Jobs</a><br>
+      <a class="btn btn-outline-dark" href="friendlist" style="
+      margin-bottom: 10px;  ">View Your Friends</a><br>
+      <a class="btn btn-outline-dark" href="confirmedjobs" style="
+      margin-bottom: 10px;  ">Confirmed Jobs </a><br>
+      <a href="{% url 'requestlist' %}" class="btn btn-outline-dark" style="
+      margin-bottom: 10px;  ">Check connection requests</a><br>
+    </div>
+
+  </div>
+  <div class="row">
+    <div class="col-sm">
+      <br>
+      <br>
+      <h3>Find Buddies</h3>
+      {% for test in tests%}
+      <a class="btn btn-outline-dark" href="buddylist/{{test.Intrest}}" style="
+      margin-bottom: 10px;  
+      margin-right: 10px;" >Find your Buddies in {{test.Intrest}}</a>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm">
+      <br>
+      <br>
+      <h3>Re-Appear for Test</h3>
+      {% for option in options %}
+    <a class="btn btn-outline-dark" href="retest/{{option.choice}}"  style="
+    margin-bottom: 10px;  
+    margin-right: 20px;">{{option.choice}}</a>
+    {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+<div class="container my-3">
   <a href="{% url 'requestlist' %}" class="btn btn-outline-success">Check connection requests</a><br>
     {{user}}<br>
       {{user.email}}<br>
@@ -21,4 +117,4 @@
 
 </div>
   
-  {% endblock %}
+ -->

@@ -12,11 +12,109 @@ from django.utils.datastructures import MultiValueDictKeyError
 from .models import CustomUser
 from .filters import ApplicantFilter
 # Create your views here.
+from django.core.files.storage import FileSystemStorage
+
+def uploaddp(request):
+    #person=Profile.objects.filter(username=request.user)
+    if request.method == 'POST' and request.FILES['myfile']:
+
+            myfile = request.FILES['myfile']
+            fs = FileSystemStorage()
+            filename = fs.save(myfile.name, myfile)
+            uploaded_file_url = fs.url(filename)
+            Profile.objects.filter(username=request.user).update(dp=uploaded_file_url,dplink=uploaded_file_url)
+            # jj.save()
+            # applicantss=int(applicants)+1
+            # JobPortal.objects.filter(id=slug).update(noOfApplicants=applicantss)
+            # messages.success(request,"Applied Successfully")
+  
+            return redirect("profile")
+    return render(request,"code/uploaddp.html")
+
+
+def lresponse(request):
+    person=Profile.objects.get(username=request.user)
+    job=Applicants.objects.filter(Applicants=person).filter(sender=True).filter(status="Pending")
+    return render(request,"code/lresponse.html",{'job':job})
+
+def viewdetailaccept(request,slug):
+    job=JobPortal.objects.get(id=slug)
+    person=Profile.objects.get(username=request.user)
+    Applicants.objects.filter(Applicants=person).filter(ApplyingTo=job).update(status="Accepted")
+
+    return redirect("jrequest")
+
+def viewdetail2(request,slug):
+    job=JobPortal.objects.get(id=slug)
+    return render(request,"code/viewdetail2.html",{'job':job}) 
+
+    return redirect("jrequest")
+def viewdetailreject(request,slug):
+    job=JobPortal.objects.get(id=slug)
+    person=Profile.objects.get(username=request.user)
+    Applicants.objects.filter(Applicants=person).filter(ApplyingTo=job).update(status="Declined")
+    return redirect("jrequest")
+
+def notIntrested(request,slug):
+    job=JobPortal.objects.get(id=slug)
+    person=Profile.objects.get(username=request.user)
+    Applicants.objects.filter(Applicants=person).filter(ApplyingTo=job).delete()
+    return redirect("jrequest")
+
+def viewdetail(request,slug):
+    job=JobPortal.objects.get(id=slug)
+    return render(request,"code/viewdetail.html",{'job':job}) 
+
+
+def jrequest(request):
+    person=Profile.objects.get(username=request.user)
+    job=Applicants.objects.filter(Applicants=person).filter(sender=False).filter(status="Pending")
+    return render(request,"code/jrequest.html",{'job':job})
+
+
+
+
 
 
 def apply(request):
-    job=JobPortal.objects.all()
+    job=JobPortal.objects.filter(is_verified=True)
     return render(request,"code/apply.html",{'jobs':job})
+
+def applyto(request,slug):
+    job=JobPortal.objects.get(id=slug)
+    applicants=job.noOfApplicants
+    person=Profile.objects.get(username=request.user)
+    applied=False
+    if Applicants.objects.filter(Applicants=person).filter(ApplyingTo=job).exists()==False:
+
+        if request.method == 'POST' and request.FILES['myfile']:
+
+            myfile = request.FILES['myfile']
+            mess = request.POST['jd']
+            fs = FileSystemStorage()
+            filename = fs.save(myfile.name, myfile)
+            uploaded_file_url = fs.url(filename)
+            jj=Applicants(Applicants=person,ApplyingTo=job,status="Pending",message=mess,resumeli=uploaded_file_url,resume=uploaded_file_url)
+            jj.save()
+            applicantss=int(applicants)+1
+            JobPortal.objects.filter(id=slug).update(noOfApplicants=applicantss)
+            messages.success(request,"Applied Successfully")
+            applied=True
+            return render(request,"code/applyto.html",{'job': job,'uploaded_file_url': uploaded_file_url,'applied':applied})
+            
+        
+        return render(request,"code/applyto.html",{'job': job,'applied':applied})
+    
+    
+    if Applicants.objects.filter(Applicants=person).filter(ApplyingTo=job).exists():
+
+        messages.warning(request,"Already Applied")
+        return redirect('apply')
+    
+
+
+        
+
 
 
 
@@ -68,6 +166,7 @@ def addapplicant(request,slug,name):
 def seeapplicants(request,slug):
     job=JobPortal.objects.get(id=slug)
     ppl=Applicants.objects.filter(ApplyingTo=job).filter(sender=True).filter(status="Pending")
+
     return render(request,"code/japplicants.html",{"ppl":ppl,"slug":slug})
 
 
@@ -134,13 +233,14 @@ def jobDeclaration(request):
         name=JobProfile.objects.get(username=request.user)
    
         companyname=request.POST['companyname']
-
+        jr=request.POST['jr']
+        jl=request.POST['jl']
         jd=request.POST['jd']
         expectedSalary=request.POST['expectedSalary']
         if expectedSalary:
-            JobPortal(name=name,companyname=companyname,jobDescription=jd,expectedSalary=expectedSalary).save()
+            JobPortal(name=name,companyname=companyname,jobDescription=jd,expectedSalary=expectedSalary,jTitle=jr,location=jl).save()
         else:
-            JobPortal(name=name,companyname=companyname,jobDescription=jd).save()
+            JobPortal(name=name,companyname=companyname,jobDescription=jd,jTitle=jr,location=jl).save()
         return render(request,"code/waiting.html")
 
     return render(request,'code/jobDeclaration.html')
@@ -191,6 +291,11 @@ def findppl(request,slug):
   
 
     return render(request,"code/findppl.html",{'myFilter':myFilter,'Intrestss':Intrestss,'slug':slug})
+
+def confirmedjobs(request):
+    person=Profile.objects.get(username=request.user)
+    App=Applicants.objects.filter(Applicants=person).filter(status="Accepted")
+    return render(request,"code/jobconfirmed.html",{'Applicants':App})
 
 def timeline(request):
     n=request.user
@@ -691,27 +796,29 @@ def friendlist(request):
 
 
 def chatting(request,receiver):
-    sender=request.user
-    params=["messagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessage",
-        "dsyhbs sf hufesdsdnv fdbvjnfvn vnv sd bdfv fv nsd v nfdvn nvjdsvndfi fb ",
-        "sdvin usfnvfefdnn fnmfbjkfbm   dfb njdfb  xifbjcn  fcbfdl kdfbnkdmzelbnbij bfkvcn"
-    ]
-    return render(request,"code/message.html",{"message":params,"receiver":receiver})
+    sender=Profile.objects.get(username=request.user)
+    rec=Profile.objects.get(username=receiver)
+    params1=Message.objects.filter(sender=sender).filter(receiver=rec)
+    params2=Message.objects.filter(sender=rec).filter(receiver=sender)
+    params= params1 | params2
+    p=params.order_by('time')
+
+    return render(request,"code/message.html",{"message":p,"receiver":receiver})
 
 
 def message(request,receiver):
-
+    print("111")
     if request.method=="POST":
-        
         mess=request.POST['message']
         receiver_user = Profile.objects.get(username=receiver)
         sender=request.user
         sender_user=Profile.objects.get(username=sender.username)
-    
+
         thread=Message(sender=sender_user,receiver=receiver_user,mess=mess)
 
         thread.save()
-    return redirect("message")
+
+    return redirect("chatting",receiver=receiver)
 
 def retest(request,slug):
     sub=TestOptions.objects.filter(choice=slug).get()

@@ -38,6 +38,18 @@ urlpatterns = [
 
 
     path('apply',views.apply,name="apply"),
+    path('applyto/<str:slug>',views.applyto,name="applyto"),
+    path('jrequest',views.jrequest,name="jrequest"),
+    path('lresponse',views.lresponse,name="lresponse"),
+    path('viewdetail/<str:slug>',views.viewdetail,name="viewdetail"),
+    path('viewdetail2/<str:slug>',views.viewdetail2,name="viewdetail2"),
+    path('viewdetailaccept/<str:slug>',views.viewdetailaccept,name="viewdetailaccept"),
+    path('viewdetailreject/<str:slug>',views.viewdetailreject,name="viewdetailreject"),
+    path('notintrested/<str:slug>',views.notIntrested,name="notIntrested"),
+
+
+    path('uploaddp',views.uploaddp,name="uploaddp"),
+    path('confirmedjobs',views.confirmedjobs,name="confirmedjobs"),
 
 
 

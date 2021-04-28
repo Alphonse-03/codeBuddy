@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<div class="container my-3">
+    <div class="row">
+
+        {% for bud in Applicants %} 
+   
+        <div class="col col-xs-12 col-sm-12 col-md-6 col-lg-6">
+
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+
+                    <h5 class="card-title">{{bud.ApplyingTo.companyname}}</h5>
+                    <p class="card-text">{{bud.ApplyingTo.jTitle}};</p>
+                    <p class="card-text">{{bud.ApplyingTo.location}}</p>
+                    <p class="card-text">{{bud.ApplyingTo.expectedSalary}}</p>
+                    <a class="btn btn-info" id="demo" href="/chat/{{bud.ApplyingTo.name}}">Message</a>
+                </div>
+            </div>
+        </div>    
+  
+{% endfor %}
+
+</div>
+
+</div>
+{% endblock %}

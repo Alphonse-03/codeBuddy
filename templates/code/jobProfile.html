@@ -11,6 +11,8 @@
     {% for v in verifiedJobs %}
     <blockquote class="w3-panel w3-leftbar w3-light-grey">
         companyname::::::::::::::::::::::::{{v.companyname}}<br>
+        job role::::::::::::::::::::::::::{{v.jTitle}}<br>
+        location::::::::::::::::::::::::::{{v.location}}<br>
         jobDescription:::::::::::::::::::::{{v.jobDescription}}<br>
         salary::::::::::::::::::::::::{{v.expectedSalary}}<br>
         <a class="btn btn-info" id="demo" href="/findppl/{{v.id}}">Find People</a>
@@ -38,12 +40,13 @@ pendingJobs :----
     {% for v in pendingJobs %}
     <blockquote class="w3-panel w3-leftbar w3-light-grey">
         companyname::::::::::::::::::::::::{{v.companyname}}<br>
+        job role::::::::::::::::::::::::::{{v.jTitle}}<br>
+        location::::::::::::::::::::::::::{{v.location}}<br>
         jobDescription:::::::::::::::::::::{{v.jobDescription}}<br>
         salary::::::::::::::::::::::::{{v.expectedSalary}}<br>
     </blockquote>
     {% endfor %}
-    {% else %}
-    Sorry,No verified Job Exists
+   
 
     {% endif %}
 

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block body %}
+<div class="container my-3">
+    Name of the Organization:{{job.name}}<br>
+    Role:{{job.jTitle}}<br>
+    Location:{{job.location}}<br>
+    Job Decsrpition:{{job.jobDescription}}<br>
+    Expected Salary:{{job.expectedSalary}}<br>
+            <!-- Upload form. Note enctype attribute! -->
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="file" name="myfile" required>
+                
+                <div class="form-group">
+                  <label for="jd">Tell recuriter why should they hire you?*</label>
+                  <textarea class="form-control" id="jd" name="jd" rows="6" required></textarea>
+                </div>
+                <button class="btn btn-outline-info" type="submit">Upload</button>
+              </form>
+            
+              {% if uploaded_file_url %}
+                <p>File uploaded at: <a href="{{ uploaded_file_url }}">{{ uploaded_file_url }}</a></p>
+              {% endif %}
+              {% if applied %}
+              <a class="btn btn-success" id="demo" href="{% url 'apply' %}">back to home</a>
+              {% endif %}
+            
+{% endblock %}
+
+
+
+
+

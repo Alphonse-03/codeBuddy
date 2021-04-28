@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% block body %}
 <div class="container my-3">
+    <a class="btn btn-outline-dark" id="demo" href="jrequest">See Job Requests</a>
+<a class="btn btn-outline-dark" id="demo" href="lresponse">See your Last Requests </a>
     <div class="row">
         {% for job in jobs %} 
    
@@ -9,13 +11,18 @@
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
 
-                    <h5 class="card-title">{{job.name}}</h5>
-                    <p class="card-text">{{job.jTitle}}</p>
-                    <p class="card-text">{{job.location}}<p>
-                    <a class="btn btn-outline-success" id="demo" href="/sendrequest/{{bud.username}}/{{sub}}">Connect</a>
+                    <h5 class="card-title">{{job.companyname}}</h5>
+                    <p class="card-text">Role:{{job.jTitle}}</p>
+                    <p class="card-text">Location:{{job.location}}<p>
+                    <p class="card-text">Number of Applicants:{{job.noOfApplicants}}<p></p>
+                    <a class="btn btn-outline-info" id="demo" href="/applyto/{{job.id}}">Easy Apply</a>
                 </div>
             </div>
         </div>    
   
 {% endfor %}
+</div>
+</div>
+
+
 {% endblock %}

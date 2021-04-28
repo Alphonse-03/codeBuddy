@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="container">
+    Company Name:{{job.companyname}}<br>
+    Job Title:{{job.jTitle}}<br>
+    Location:{{job.location}}<br>
+    Job Discription:{{job.jobDescription}}    <br>
+    Expected Salary:{{job.expectedSalary}}<br>
+    {{res}}
+
+    <a class="btn btn-outline-danger" href="/notintrested/{{job.id}}">Not Intrested anymore</a><br>
+
+</div>
+{% endblock %}

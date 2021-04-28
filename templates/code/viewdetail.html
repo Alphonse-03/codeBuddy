@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="container">
+    Company Name:{{job.companyname}}<br>
+    Job Title:{{job.jTitle}}<br>
+    Location:{{job.location}}<br>
+    Job Discription:{{job.jobDescription}}    <br>
+    Expected Salary:{{job.expectedSalary}}<br>
+    {{res}}
+    {% if res %}
+    <a class="btn btn-outline-danger" href="/viewdetailreject/{{job.id}}">Not Intrested anymore</a><br>
+    {% else %}
+    <a class="btn btn-outline-success" href="/viewdetailaccept/{{job.id}}">Accept</a>
+    <a class="btn btn-outline-danger" href="/viewdetailreject/{{job.id}}">Reject</a><br>
+    {% endif %}
+</div>
+{% endblock %}

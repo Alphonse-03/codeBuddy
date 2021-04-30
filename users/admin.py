@@ -15,6 +15,7 @@ class questionAdmin(admin.ModelAdmin):
 
 
 # 
+
 admin.site.register(CustomUser)
 admin.site.register(Applicants)
 admin.site.register(JobProfile)

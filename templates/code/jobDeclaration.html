@@ -2,9 +2,9 @@
 {% block body %}
 
 <div class="container">
-<form action="jobDeclaration" method="POST">
+<form action="jobDeclaration" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
-   
+  
         <div class="form-group">
           <label for="companyname">Company Name*</label>
           <input type="text" name="companyname" class="form-control" id="companyname" required>
@@ -27,9 +27,15 @@
             <label for="expectedSalary">Expected Salary</label>
             <input type="text" name="expectedSalary" class="form-control" id="expectedSalary">
           </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+      
+
+            <input type="file" name="myfile"> 
+    
+
+       <button type="submit" class="btn btn-primary">Submit</button>
 
 </form>
 </div>
 
 {% endblock %}
+

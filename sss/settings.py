@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users',
     'tinymce',
+    "countdowntimer_model",
+    'ckeditor',
 ]
 
 MIDDLEWARE = [

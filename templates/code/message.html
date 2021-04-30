@@ -1,17 +1,54 @@
 {% extends 'base.html' %}
 {% block body %}
+<style>
+  body {
+    background-color: gray;
+  }
 
-{% for mess in message %}
-{{mess.sender}}--{{mess.mess}}<br>
+  .vertical-menu {
+    margin: 0 auto;
+    /* Added */
+    float: none;
+    /* Added */
+    margin-bottom: 10px;
+    /* Added */
+    margin-top: 1%;
+    width: 80%;
+    height: 600px;
+    overflow-y: auto;
+  }
+  .box{
+    text-align: center;
+  }
+</style>
+<div class="container">
+  <div style="background-color:azure" class="w3-panel w3-card vertical-menu">
+    {% for mess in message %}
+    <img src={{mess.sender.dplink}} alt="avatar"
+      style="width: 50px; height: 55px;display: inline-block; margin-right:1% ;border-radius: 50%;display:inline;">
+    <h5 style="display:inline">{{mess.sender}}--{{mess.mess}}</h5>
+    {% if mess.read %}
 
-{% endfor %}
+    <img align="right" src={{mess.receiver.dplink}}
+      style="width: 20px; height: 20px;display: inline-block;border-radius: 50%; text-align: right;">
+    {% endif %}
+    <p style="text-align: right;">{{mess.time}}</p>
+    <hr>
+    {% endfor %}
 
+  </div>
 
-
- <form action="/chat/message/{{receiver}}" method="POST">
+  <form action="/chat/message/{{receiver}}" method="POST">
     {% csrf_token %}
-    <input type="text" name="message" id="message">
-    <input type="submit" value="send">
-</form>
-  
-  {% endblock %} 
+    <div class="box" style="display:display-inline">
+      <input style="width:73%; height:45px;" type="text" name="message" id="message">
+
+
+      <button type="submit" style="background-color:aquamarine; border-radius: 40%;"><i class="material-icons md-18">
+          send
+        </i></button></div>
+  </form>
+
+
+</div>
+{% endblock %}

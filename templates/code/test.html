@@ -1,6 +1,22 @@
 {% extends 'base.html' %}
 {% block body %}
-<div class="container">
+<style>
+#ten-countdown {
+    /* text-align: center; */
+    border: 5px solid #004853;
+    display:inline;
+    padding: 5px;
+    color: #004853;
+    font-family: Verdana, sans-serif, Arial;
+    font-size: 40px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+
+</style>
+<div class="container" >
+    <div style="margin-left: 45%;" id="ten-countdown"></div>
     <form action="{% url 'acceptAnswer' %}" method="POST">
         {% csrf_token %}
         {% for key, value in questions.items %} 
@@ -11,10 +27,47 @@
         <input type="radio" id="1" name="{{key}}" value="1">:{{value.option1}}<br>
         <input type="radio" id="2" name="{{key}}" value="2">:{{value.option2}}<br>
         <input type="radio" id="3" name="{{key}}" value="3">:{{value.option3}}<br>
+        
         <input type="radio" id="4" name="{{key}}" value="4">:{{value.option4}}<br>
         
         {% endfor %}
         <input type="submit" value="submit">
     </form>
+
 </div>
+{% block script %} 
+<script>
+function countdown( elementName, minutes, seconds )
+{
+    var element, endTime, hours, mins, msLeft, time;
+
+    function twoDigits( n )
+    {
+        return (n <= 9 ? "0" + n : n);
+    }
+
+    function updateTimer()
+    {
+        msLeft = endTime - (+new Date);
+        if ( msLeft < 1000 ) {
+            element.innerHTML = "Time is up!";
+        } else {
+            time = new Date( msLeft );
+            hours = time.getUTCHours();
+            mins = time.getUTCMinutes();
+            element.innerHTML = (hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds() );
+            setTimeout( updateTimer, time.getUTCMilliseconds() + 500 );
+        }
+    }
+
+    element = document.getElementById( elementName );
+    endTime = (+new Date) + 1000 * (60*minutes + seconds) + 500;
+    updateTimer();
+}
+
+countdown( "ten-countdown", 10, 0 );
+</script>
+
+{% endblock %}
+
 {% endblock %}

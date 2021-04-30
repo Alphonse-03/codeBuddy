@@ -11,6 +11,7 @@ from django.contrib import messages
 from django.utils.datastructures import MultiValueDictKeyError
 from .models import CustomUser
 from .filters import ApplicantFilter
+
 # Create your views here.
 from django.core.files.storage import FileSystemStorage
 
@@ -23,6 +24,7 @@ def uploaddp(request):
             filename = fs.save(myfile.name, myfile)
             uploaded_file_url = fs.url(filename)
             Profile.objects.filter(username=request.user).update(dp=uploaded_file_url,dplink=uploaded_file_url)
+            CustomUser.objects.filter(username=request.user).update(dp=uploaded_file_url,dplink=uploaded_file_url)
             # jj.save()
             # applicantss=int(applicants)+1
             # JobPortal.objects.filter(id=slug).update(noOfApplicants=applicantss)
@@ -237,8 +239,15 @@ def jobDeclaration(request):
         jl=request.POST['jl']
         jd=request.POST['jd']
         expectedSalary=request.POST['expectedSalary']
+        myfile = request.FILES['myfile']
+
+        fs = FileSystemStorage()
+        filename = fs.save(myfile.name, myfile)
+        uploaded_file_url = fs.url(filename)
+    
+        CustomUser.objects.filter(username=request.user).update(dp=uploaded_file_url,dplink=uploaded_file_url)
         if expectedSalary:
-            JobPortal(name=name,companyname=companyname,jobDescription=jd,expectedSalary=expectedSalary,jTitle=jr,location=jl).save()
+            JobPortal(name=name,companyname=companyname,jobDescription=jd,expectedSalary=expectedSalary,jTitle=jr,location=jl,dp=uploaded_file_url,dplink=uploaded_file_url).save()
         else:
             JobPortal(name=name,companyname=companyname,jobDescription=jd,jTitle=jr,location=jl).save()
         return render(request,"code/waiting.html")
@@ -474,6 +483,7 @@ def cate(marks):
 
 def acceptAnswer(request):
         answers=[]
+
         if request.method=="POST":
             answers.append(request.POST['a'])
             answers.append(request.POST['b'])
@@ -796,8 +806,10 @@ def friendlist(request):
 
 
 def chatting(request,receiver):
-    sender=Profile.objects.get(username=request.user)
-    rec=Profile.objects.get(username=receiver)
+    Message.objects.filter()
+    sender=CustomUser.objects.get(username=request.user)
+    rec=CustomUser.objects.get(username=receiver)
+    Message.objects.filter(sender=rec).filter(receiver=sender).update(read=True)
     params1=Message.objects.filter(sender=sender).filter(receiver=rec)
     params2=Message.objects.filter(sender=rec).filter(receiver=sender)
     params= params1 | params2
@@ -810,9 +822,9 @@ def message(request,receiver):
     print("111")
     if request.method=="POST":
         mess=request.POST['message']
-        receiver_user = Profile.objects.get(username=receiver)
+        receiver_user = CustomUser.objects.get(username=receiver)
         sender=request.user
-        sender_user=Profile.objects.get(username=sender.username)
+        sender_user=CustomUser.objects.get(username=sender.username)
 
         thread=Message(sender=sender_user,receiver=receiver_user,mess=mess)
 
@@ -827,9 +839,13 @@ def retest(request,slug):
         last_rec=len(Intrest.objects.filter(Intrest=sub).filter(user=user))
         if last_rec!=0:
             s=Intrest.objects.filter(Intrest=sub).filter(user=user).order_by('-time').first().time
-            c=datetime.datetime.now()-timedelta(days=30)
- 
-            if c>s:
+            # c=datetime.datetime.now()-timedelta(days=30)
+            c=datetime.datetime.now()
+            x=timedelta(days=30)
+            print(c)
+            print(s)
+            
+            if c-s>x:
                 que=questions.objects.filter(Subject=sub)  
                 question=[]
         
@@ -852,8 +868,18 @@ def retest(request,slug):
                 d = dict(zip(un,sampling))
                 return render(request,"code/test.html",{'questions':d})
             else:
-                 txt="you have recently applied for this test please wait for 30 days and try again"
-                 return render(request,"code/dub.html",{"txt":txt})
+                days=30-(c-s).days
+                seconds=86400-(c-s).seconds
+                minutes=0
+                hours=0
+                while(seconds>3600):
+                    hours+=1
+                    seconds=seconds-3600
+                while(seconds>60):
+                    minutes+=1
+                    seconds=seconds-60
+                txt=f"you have recently applied for this test please wait for {days} days {hours}h {minutes}m {seconds}s and try again"
+                return render(request,"code/dub.html",{"txt":txt})
             
 
         else:
@@ -862,4 +888,7 @@ def retest(request,slug):
             
     
 
-        
+
+
+
+

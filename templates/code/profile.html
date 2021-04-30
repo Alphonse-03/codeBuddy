@@ -7,7 +7,7 @@
 
       <img src={{user.dplink}}
         alt="">
-      <a href="{% url 'uploaddp' %}" style="margin-left: 130px;">upload new dp</a>
+      <a href="{% url 'uploaddp' %}" style="margin-left: 100px;">upload new dp</a>
     </div>
     <div class="col-sm">
       <br>
@@ -17,11 +17,15 @@
       <br>
       <div class="card" style="width: 18rem;">
         <div class="card-body">
+          {% if tests%}
           {% for test in tests%}
           <h6 class="card-title">{{test.Intrest}} => {{test.category}} <i class="material-icons md-18">verified</i>
           </h6>
           <br>
           {% endfor %}
+          {% else %}
+          <h6>You have never applied in any Tests</h6>
+          {% endif %}
         </div>
       </div>
     </div>

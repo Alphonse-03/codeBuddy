@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractUser
 # Create your models here.
 
 import uuid
-
+from ckeditor.fields import RichTextField
 
 
 
@@ -12,8 +12,8 @@ class Profile(models.Model):
     name=models.CharField(max_length=30)
     email=models.CharField(max_length=40)
     username=models.CharField(max_length=30,unique=True)
-    dp = models.FileField(upload_to='dp/',null=True,blank=True)
-    dplink = models.CharField(max_length=70,null=True,blank=True)
+    dp = models.FileField(upload_to='dp/',default='/media/default.png')
+    dplink = models.CharField(max_length=70,default='/media/default.png')
     
    
     def __str__(self):
@@ -23,6 +23,8 @@ class Profile(models.Model):
 
 class CustomUser(AbstractUser):
     is_recruiter=models.BooleanField(default=False)
+    dp = models.FileField(upload_to='dp/',default='/media/default.png')
+    dplink = models.CharField(max_length=70,default='/media/default.png')
 
 class JobProfile(models.Model):
     idno=models.AutoField(primary_key=True)
@@ -40,10 +42,13 @@ class JobPortal(models.Model):
     jTitle=models.CharField(blank=True,null=True,max_length=50)
     location=models.CharField(blank=True,null=True,max_length=30)
     noOfApplicants=models.CharField(blank=True,null=True,default=0,max_length=10)
-    jobDescription=models.TextField()
+    # jobDescription=models.TextField()
+    jobDescription=RichTextField(blank=True,null=True)
   
     expectedSalary=models.CharField(max_length=20,blank=True,default="Declined to say")
     is_verified=models.BooleanField(default=False,blank=True)
+    dp = models.FileField(upload_to='dp/',default='/media/default.png')
+    dplink = models.CharField(max_length=70,default='/media/default.png')
     id = models.UUIDField(
          primary_key = True,
          default = uuid.uuid4,
@@ -81,9 +86,10 @@ class Applicants(models.Model):
 
 class Message(models.Model):
     mno=models.AutoField(primary_key=True)
-    sender = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="Msender")
-    receiver = models.ForeignKey(Profile,on_delete=models.CASCADE, related_name="Mreceiver")
-    mess=models.CharField(max_length=2000,null='true')
+    sender = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="Msender")
+    receiver = models.ForeignKey(CustomUser,on_delete=models.CASCADE, related_name="Mreceiver")
+    # mess=models.CharField(max_length=2000,null='true')
+    mess=RichTextField(blank=True,null=True)
     read=models.BooleanField(default=False)
     time=models.DateTimeField(auto_now_add=True)
     

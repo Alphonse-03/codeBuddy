@@ -11,7 +11,7 @@ from django.contrib import messages
 from django.utils.datastructures import MultiValueDictKeyError
 from .models import CustomUser
 from .filters import ApplicantFilter
-
+from .forms import RegistrationForm
 # Create your views here.
 from django.core.files.storage import FileSystemStorage
 
@@ -230,6 +230,7 @@ def loginhandlerecruiter(request):
 
 
 def jobDeclaration(request):
+    form=RegistrationForm()
     if request.method=="POST":
  
         name=JobProfile.objects.get(username=request.user)
@@ -237,7 +238,8 @@ def jobDeclaration(request):
         companyname=request.POST['companyname']
         jr=request.POST['jr']
         jl=request.POST['jl']
-        jd=request.POST['jd']
+        form=RegistrationForm(request.POST)
+        
         expectedSalary=request.POST['expectedSalary']
         myfile = request.FILES['myfile']
 
@@ -246,13 +248,17 @@ def jobDeclaration(request):
         uploaded_file_url = fs.url(filename)
     
         CustomUser.objects.filter(username=request.user).update(dp=uploaded_file_url,dplink=uploaded_file_url)
-        if expectedSalary:
-            JobPortal(name=name,companyname=companyname,jobDescription=jd,expectedSalary=expectedSalary,jTitle=jr,location=jl,dp=uploaded_file_url,dplink=uploaded_file_url).save()
-        else:
-            JobPortal(name=name,companyname=companyname,jobDescription=jd,jTitle=jr,location=jl).save()
-        return render(request,"code/waiting.html")
+        if form.is_valid():
+            qdict=form.data
+            jd=qdict.get("jobDescription")
+            print(jd)
+            if expectedSalary:
+                JobPortal(name=name,companyname=companyname,jobDescription=jd,expectedSalary=expectedSalary,jTitle=jr,location=jl,dp=uploaded_file_url,dplink=uploaded_file_url).save()
+            else:
+                JobPortal(name=name,companyname=companyname,jobDescription=jd,jTitle=jr,location=jl).save()
+            return render(request,"code/waiting.html")
 
-    return render(request,'code/jobDeclaration.html')
+    return render(request,'code/jobDeclaration.html',{'form':form})
 
 
 def home(request):

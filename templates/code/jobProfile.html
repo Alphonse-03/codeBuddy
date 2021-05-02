@@ -13,7 +13,7 @@
         companyname::::::::::::::::::::::::{{v.companyname}}<br>
         job role::::::::::::::::::::::::::{{v.jTitle}}<br>
         location::::::::::::::::::::::::::{{v.location}}<br>
-        jobDescription:::::::::::::::::::::{{v.jobDescription}}<br>
+        jobDescription:::::::::::::::::::::{{v.jobDescription|safe}}<br>
         salary::::::::::::::::::::::::{{v.expectedSalary}}<br>
         <a class="btn btn-info" id="demo" href="/findppl/{{v.id}}">Find People</a>
         <a class="btn btn-info" id="demo" href="/seeapplicants/{{v.id}}">See Applicants</a>
@@ -42,7 +42,7 @@ pendingJobs :----
         companyname::::::::::::::::::::::::{{v.companyname}}<br>
         job role::::::::::::::::::::::::::{{v.jTitle}}<br>
         location::::::::::::::::::::::::::{{v.location}}<br>
-        jobDescription:::::::::::::::::::::{{v.jobDescription}}<br>
+        jobDescription:::::::::::::::::::::{{v.jobDescription|safe}}<br>
         salary::::::::::::::::::::::::{{v.expectedSalary}}<br>
     </blockquote>
     {% endfor %}

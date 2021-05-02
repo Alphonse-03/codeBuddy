@@ -16,7 +16,7 @@ function countdown( elementName, minutes, seconds )
         msLeft = endTime - (+new Date);
         function submitform(){
             document.getElementById("myForm").submit();
-            window.location.href = "{% url 'acceptAnswer' %}";
+           
           }
         if ( msLeft < 100 ) {
            
@@ -51,7 +51,9 @@ countdown( "ten-countdown", 1, 0 );</script>
     font-weight: bold;
     text-decoration: none;
 }
-
+#hidden{
+    display: none;
+}
 
 </style>
 <div class="container" >
@@ -68,6 +70,7 @@ countdown( "ten-countdown", 1, 0 );</script>
         <input type="radio" id="3" name="{{key}}" value="3">:{{value.option3}}<br>
         
         <input type="radio" id="4" name="{{key}}" value="4">:{{value.option4}}<br>
+        <input type="radio" id="hidden" name="{{key}}" value="0" checked><br>
         
         {% endfor %}
         <input type="submit" value="submit">

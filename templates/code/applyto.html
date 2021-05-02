@@ -7,7 +7,7 @@
     Name of the Organization:{{job.name}}<br>
     Role:{{job.jTitle}}<br>
     Location:{{job.location}}<br>
-    Job Decsrpition:{{job.jobDescription}}<br>
+    Job Decsrpition:{{job.jobDescription|safe}}<br>
     Expected Salary:{{job.expectedSalary}}<br>
             <!-- Upload form. Note enctype attribute! -->
             <form method="post" enctype="multipart/form-data">

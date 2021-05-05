@@ -1,0 +1,246 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'sty.css' %}">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <style>
+     
+    </style>
+    <header>
+        <section id="desktop-menu" class="desktop-menu">
+            <nav  class="sidebar flex-column-nowrap">
+                <a class="sidebar__logo" href="#">
+                    <abbr class="logo">CodeBuddy</abbr>
+                </a>
+               <div style="margin-bottom:40px" >
+                <ul class="sidebar__nav-list flex-column-nowrap" role="menubar" style="padding-left: 0px;" aria-label="Main desktop menu">
+                    <li class="nav-list__item about-me active fake-button flex-column-nowrap" role="menuitem">
+                        <a class="flex-row-wrap" href="#" tabindex="0">
+                            <svg height="38.095242" width="40" viewBox="0 0 44.017969 41.921879" role="img" aria-labelledby="About me"><path d="m 21.936719,23.52688 c 6.505156,0 11.781484,-5.27641 11.781484,-11.78148 C 33.718203,5.24032 28.441797,0 21.936719,0 15.431641,0 10.155234,5.27641 10.155234,11.7454 c 0,6.46898 5.276329,11.78148 11.781485,11.78148 z m 0,-20.455 c 4.77039,0 8.673515,3.90305 8.673515,8.67352 0,4.77046 -3.903125,8.67343 -8.673515,8.67343 -4.770391,0 -8.673516,-3.90304 -8.673516,-8.67351 0,-4.77047 3.903047,-8.67344 8.673516,-8.67344 z" id="path2" class="path" style="fill:#c6c6c6;stroke-width:0.8;stroke:#1B1D1D;" /><path d="M 1.5539844,41.92188 H 42.463984 c 0.867344,0 1.553985,-0.68664 1.553985,-1.55398 0,-8.13141 -6.613516,-14.7811 -14.781094,-14.7811 H 14.781094 C 6.6496875,25.5868 0,32.20032 0,40.3679 c 0,0.86734 0.68664062,1.55398 1.5539844,1.55398 z M 14.781094,28.69477 h 14.455781 c 5.926875,0 10.805703,4.40906 11.564688,10.11906 H 3.2164063 C 3.9753125,33.14 8.8542188,28.69477 14.781094,28.69477 Z" id="path4" class="path" style="fill:#c6c6c6;stroke-width:0.8;stroke:#1B1D1D;" /></svg>
+                            <span class="u-uppercase">About Us</span>
+                        </a>
+                    </li>
+          
+                 
+                    <li class="nav-list__item my-work fake-button flex-column-nowrap" role="menuitem">
+                        <a class="flex-row-wrap" href="{% url 'loginhandle' %}" data-toggle="modal" data-target="#loginmodal" tabindex="0">
+                            <img src="https://img.icons8.com/pastel-glyph/40/ffffff/login-rounded-right.png"/>
+                            <span class="u-uppercase">Login as Coder</span>
+                        </a>
+                    </li>
+                    <li class="nav-list__item my-work fake-button flex-column-nowrap" role="menuitem">
+                        <a class="flex-row-wrap" href="{% url 'registerhandle' %}" data-toggle="modal" data-target="#registermodal" tabindex="0">
+                            <img src="https://img.icons8.com/ios-filled/40/ffffff/student-registration.png"/>
+                            <span class="u-uppercase">Register as Coder</span>
+                        </a>
+                    </li>
+                    <li class="nav-list__item my-work fake-button flex-column-nowrap" role="menuitem">
+                        <a class="flex-row-wrap" href="{% url 'registerhandlerecruiter' %}" tabindex="0">
+                            <img src="https://img.icons8.com/carbon-copy/50/ffffff/new-job.png"/>
+                            <span class="u-uppercase">Register as Recruiter</span>
+                        </a>
+                    </li>
+                  
+                    <li class="nav-list__item my-work fake-button flex-column-nowrap" role="menuitem">
+                        <a class="flex-row-wrap" href="{% url 'loginhandlerecruiter' %}" tabindex="0">
+                            <img src="https://img.icons8.com/pastel-glyph/40/ffffff/login-rounded-right.png"/>
+                            
+                            <span class="u-uppercase">Login as Recruiter</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+                    </li>
+                  
+                </ul> 
+            </nav>
+            <div class="modal fade" id="loginmodal" tabindex="-1" role="dialog" aria-labelledby="loginmodalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="loginmodalLabel">Modal title</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form method="POST" action="/loginhandle">
+                    {% csrf_token %}
+                    <div class="form-group">
+                      <label for="username">Username</label>
+                      <input type="text" name="username" class="form-control" id="username">
+                    </div>
+                    <div class="form-group">
+                      <label for="password">Password</label>
+                      <input type="password" name="password" class="form-control" id="password">
+                    </div>
+                    <button type="submit" class="btn btn-primary ">login</button>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        
+                </div>
+              </div>
+            </div>
+          </div>
+        
+          <!-- register modal -->
+        
+          <div class="modal fade" id="registermodal" tabindex="-1" role="dialog" aria-labelledby="registermodalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="registermodalLabel">Modal title</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form method="POST" action="/registerhandle">
+                    {% csrf_token %}
+                    <div class="form-group">
+                      <label for="fname">First Name</label>
+                      <input type="text" name="fname" class="form-control" id="fname">
+                    </div>
+                    <div class="form-group">
+                      <label for="lname">Last Name</label>
+                      <input type="text" name="lname" class="form-control" id="lname">
+                    </div>
+                    <div class="form-group">
+                      <label for="email">Email</label>
+                      <input type="text" name="email" class="form-control" id="email">
+                    </div>
+        
+                    <div class="form-group">
+                      <label for="username">Username</label>
+                      <input type="text" name="username" class="form-control" id="username">
+                    </div>
+                    <div class="form-group">
+                      <label for="password">Password</label>
+                      <input type="password" name="password1" class="form-control" id="password1">
+                    </div>
+                    <div class="form-group">
+                      <label for="password">confirm Password</label>
+                      <input type="password" name="password2" class="form-control" id="password2">
+                    </div>
+                    <button type="submit" class="btn btn-primary ">Login</button>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section id="mobile-menu" class="mobile-menu navbar flex-row-wrap">
+            <a class="navbar__logo" href="#">
+                <span class="logo">CodeBuddy</span>
+            </a>
+            <div class="navbar__mobile-menu">
+                <div class="menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+            <nav class="navbar__mobile-menu__nav" aria-label="Main mobile menu" aria-hidden="true">
+                <ul class="navbar__mobile-menu__list flex-column-nowrap"  role="menu">
+                    <li class="navbar__mobile-menu__item flex-row-wrap about-me u-uppercase fake-button active" role="menuitem">
+                        <a href="#" tabindex="-1">About us</a>
+                    </li>
+                    <li class="navbar__mobile-menu__item flex-row-wrap skills u-uppercase fake-button" role="menuitem">
+                        <a href="#" tabindex="-1">Contact</a>
+                    </li>
+               
+                    <li class="navbar__mobile-menu__item flex-row-wrap contact u-uppercase fake-button" role="menuitem">
+                        <a href="#" tabindex="-1">Register as Coder</a>
+                    </li>
+                    
+                    <li class="navbar__mobile-menu__item flex-row-wrap share u-uppercase fake-button" role="menuitem">
+                        <a href="#" tabindex="-1">Login as Coder</a>
+                    </li>
+                    <li class="navbar__mobile-menu__item flex-row-wrap contact u-uppercase fake-button" role="menuitem">
+                        <a href="#" tabindex="-1">Register as Recruiter</a>
+                    </li>
+                    
+                    <li class="navbar__mobile-menu__item flex-row-wrap share u-uppercase fake-button" role="menuitem">
+                        <a href="#" tabindex="-1">Login as Recruiter</a>
+                    </li>
+                </ul>
+            </nav>
+        </section>
+  
+    <div style="background-image: url('https://i.ibb.co/mt7pqrF/796832.jpg'); height: 750px;">
+      <div style="height: 200px;">
+
+      </div>
+        <div class="conatainer" style="text-align: center;">
+            <p class="display-4" style="font-family: 'Krona One';text-shadow: 2px 2px #929ba8 sans-serif; margin:auto,auto" >Welcome to CodeBuddy!!</p>
+            <p class="lead" style="text-shadow: 1px 1px #929ba8">A social media platform for geeks.</p>
+      
+              <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+            </p>
+          </div>
+
+  </div>
+</header>
+
+
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.js" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+      <script>
+        $(document).ready(function () {
+            // DOM variables
+            let languageDesktopButton = $('.extra-content__language'),
+                hamburguerMenu = $('.menu'),
+                languageMobileButton = $('.language'),
+                languageSelector = '.extra-content__language-selector';
+        
+            languageDesktopButton.on('click', function () {
+                $(this).toggleClass('is-open');
+        
+                toggleARIA($(this).find(languageSelector), 'aria-expanded');
+                toggleARIA($(this).find(languageSelector), 'aria-hidden');
+            });
+            hamburguerMenu.on("click", function () {
+                $(this).parent().parent().toggleClass('is-open');
+        
+                toggleARIA($(this).parent().parent(), 'aria-hidden');
+            });
+        
+            languageMobileButton.on('click', function () {
+                $(this).toggleClass('is-open');
+        
+                toggleARIA($(this), 'aria-expanded');
+            });
+        });
+        
+        // Toggle ARIA attributes
+      
+      </script>
+     
+</body>
+</html>

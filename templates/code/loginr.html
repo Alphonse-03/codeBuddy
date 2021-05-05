@@ -1,0 +1,106 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+  	<title>Login</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	
+	<link rel="stylesheet" href="{% static 'log.css' %}">
+
+	</head>
+
+	<body class="img js-fullheight" style="background-image: url(https://images.pexels.com/photos/4342126/pexels-photo-4342126.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260); ">
+	<section class="ftco-section">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-6 text-center mb-5">
+					<h2 class="heading-section">Recruiter</h2>
+				</div>
+			</div>
+			<div class="row justify-content-center">
+				<div class="col-md-6 col-lg-4">
+					<div class="login-wrap p-0">
+		      	<h3 class="mb-4 text-center">Have an account?</h3>
+          
+		      	<form method="POST" action="/loginhandlerecruiter">
+              {% csrf_token %}
+		      		<div class="form-group">
+		      			<input type="text" id="username" name="username" class="form-control" placeholder="Username" required>
+		      		</div>
+	            <div class="form-group">
+	              <input id="password-field" name="password-field" type="password" class="form-control" placeholder="Password" required>
+	              <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+	            </div>
+	            <div class="form-group">
+	            	<button type="submit" class="form-control btn btn-primary submit px-3">Sign In</button>
+	            </div>
+	            <div class="form-group d-md-flex">
+	            	<div class="w-50">
+		            	<label class="checkbox-wrap checkbox-primary">Remember Me
+									  <input type="checkbox" checked>
+									  <span class="checkmark"></span>
+									</label>
+								</div>
+								<div class="w-50 text-md-right">
+									<a href="#" style="color: #fff">Forgot Password</a>
+								</div>
+	            </div>
+	          </form>
+	          <p class="w-100 text-center">&mdash; Or Sign In With &mdash;</p>
+	          <div class="d-flex text-center" style="margin-left:140px;">
+              <a href="{% url 'registerhandlerecruiter' %}">Register</a>
+	          	<!-- <a href="#" class="px-2 py-2 mr-md-1 rounded"><span class="ion-logo-facebook mr-2"></span> Facebook</a>
+	          	<a href="#" class="px-2 py-2 ml-md-1 rounded"><span class="ion-logo-twitter mr-2"></span> Twitter</a> -->
+	          </div>
+		      </div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+
+	<script
+  src="https://code.jquery.com/jquery-3.6.0.js"
+  integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+  crossorigin="anonymous"></script>
+
+<script>
+	(function($) {
+
+		"use strict";
+	
+
+	
+		$(".toggle-password").click(function() {
+	
+		  $(this).toggleClass("fa-eye fa-eye-slash");
+		  var input = $($(this).attr("toggle"));
+		  if (input.attr("type") == "password") {
+			input.attr("type", "text");
+		  } else {
+			input.attr("type", "password");
+		  }
+		});
+	
+	})(jQuery);
+	
+</script>
+	</body>
+</html>
+
+<!-- https://images.pexels.com/photos/1181244/pexels-photo-1181244.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260
+
+https://images.pexels.com/photos/169573/pexels-photo-169573.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260
+
+
+
+
+
+ -->
+
+

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block body %}
+<style>
+body{
+    background-color:#bcc4d1;
+}</style>
+<div class="container" style="margin-top: 100px; text-align:center">
+<p><strong><span style="font-size: 24px;">Thanks for &nbsp;giving the test,</span></strong></p>
+<p><br></p>
+<p><strong><span style="font-size: 18px;">&nbsp; &nbsp;  &nbsp; &nbsp;Your score is : {{marks}}</span></strong></p>
+<p><strong><span style="font-size: 18px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span></strong></p>
+<p><span style="font-size: 15px;">you can re-appear after 30 days to improve your marks.</span></p>
+<p><strong><span style="font-size: 18px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span></strong></p>
+<a class="btn btn-outline-dark" href="{% url 'profile' %}">Take me to profile</a><br>
+</div>
+{% endblock %}

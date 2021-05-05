@@ -197,8 +197,8 @@ def registerhandlerecruiter(request):
         name=request.POST['name']
         email=request.POST['email']
         username=request.POST['username']
-        pass1=request.POST['password1']
-        pass2=request.POST['password2']
+        pass1=request.POST['password-field1']
+        pass2=request.POST['password-field']
 
         if pass1 == pass2:
             userr=CustomUser.objects.create_user(username,email,pass1)
@@ -211,15 +211,16 @@ def registerhandlerecruiter(request):
             messages.success(request,"you have been registered please login in")
             return redirect("/")
     
-    else:
+        else:
             return HttpResponse("404-something went wrong")
+    return render(request,"code/registerr.html")
 
 
 
 def loginhandlerecruiter(request):
     if request.method =="POST":
         username=request.POST['username']
-        password=request.POST['password']
+        password=request.POST['password-field']
         user=authenticate(username=username,password=password)
         if user is not None:
             login(request,user)
@@ -227,7 +228,7 @@ def loginhandlerecruiter(request):
             return render(request,"code/sub.html",{'txt':txt})
         else:
             return HttpResponse("something went wrong")
-
+    return render(request,"code/loginr.html")
 
 def jobDeclaration(request):
     form=RegistrationForm()
@@ -283,7 +284,7 @@ def home(request):
         # else:
         #     return redirect("profile")
     else:
-        return render(request,"code/landing.html")
+        return render(request,"navbar.html")
 
 def findppl(request,slug):
     Intrestss=Intrest.objects.all()
@@ -483,6 +484,7 @@ def cate(marks):
         category="Silver"
     else:
         category="Bronze"
+ 
     return category
 
 
@@ -533,6 +535,8 @@ def acceptAnswer(request):
         if len(Intrest.objects.filter(user=n).filter(Intrest=choice))==0:
             category=cate(marks)
             Intrest(user=n,Intrest=choice,marks=marks,category=category).save()
+            #txt=f" thanks for giving the test,your score in current test is {marks} you can reappear for this text after 30 days.Right now your best marks will be taken into consideration "
+            return render(request,"code/lub.html",{"marks":marks})
  
         elif marks>Intrest.objects.filter(user=n).filter(Intrest=choice).get().marks:
             category=cate(marks)
@@ -542,8 +546,8 @@ def acceptAnswer(request):
             Intrest.objects.filter(user=n).filter(Intrest=choice).update(time=datetime.datetime.now())
 
         
-        txt=f" thanks for giving the test,your score in current test is {marks} you can reappear for this text after 30 days.Right now your best marks will be taken into consideration "
-        return render(request,"code/dub.html",{"txt":txt})
+       # txt=f" thanks for giving the test,your score in current test is {marks} you can reappear for this text after 30 days.Right now your best marks will be taken into consideration "
+        return render(request,"code/lub.html",{"marks":marks})
         
 
 
@@ -556,13 +560,14 @@ def dub(request):
 def loginhandle(request):
     if request.method =="POST":
         username=request.POST['username']
-        password=request.POST['password']
+        password=request.POST['password-field']
         user=authenticate(username=username,password=password)
         if user is not None:
             login(request,user)
             return redirect("home")
         else:
             return HttpResponse("something went wrong")
+    return render(request,"code/login.html")
 
 def logouthandle(request):
     logout(request)
@@ -570,28 +575,30 @@ def logouthandle(request):
 
 def registerhandle(request):
     if request.method=="POST":
-        fname=request.POST['fname']
-        lname=request.POST['lname']
+        fname=request.POST['name']
+     
         username=request.POST['username']
         email=request.POST['email']
-        pass1=request.POST['password1']
-        pass2=request.POST['password2']
+        pass1=request.POST['password-field1']
+        pass2=request.POST['password-field']
 
         if pass1 == pass2:
             userr=CustomUser.objects.create_user(username,email,pass1)
            
             userr.first_name=fname
-            userr.last_name=lname
+        
             userr.save()
             profile=Profile(name=fname,email=email,username=username)
             profile.save()
-            return redirect("/")
+            return redirect("loginhandle")
     
-    else:
+        else:
             return HttpResponse("404-something went wrong")
+    return render(request,"code/registration.html")
 
 def profile(request):
     username=request.user
+    root=True
     # marks=Profile.objects.filter(username=username).first().marks
     # intrest=Profile.objects.filter(username=username).first().intrest
     # email=Profile.objects.filter(username=username).first().email
@@ -613,7 +620,7 @@ def profile(request):
     options = TestOptions.objects.all()
 
 
-    return render(request,"code/profile.html",{"user":user,"tests":tests,"options":options})
+    return render(request,"code/profile.html",{"user":user,"tests":tests,"options":options,'root':root})
 
 def buddylist(request,slug):
     username=request.user
@@ -653,7 +660,7 @@ def buddylist(request,slug):
     accepted=set(accepted_a_list).union(set(accepted_b_list))
     accepted_list=list(accepted)
 
-
+    
     
 
 
@@ -718,8 +725,12 @@ def buddylist(request,slug):
 #done
 def budprofile(request,slug):
     bud=Profile.objects.filter(username=slug).first()
-    
-    return render(request,"code/budprofile.html",{'bud':bud})
+    tests=Intrest.objects.filter(user=bud)
+
+    root=False
+
+    return render(request,"code/profile.html",{"user":bud,"tests":tests,"root":root})
+
 
 
 #done
@@ -742,7 +753,7 @@ def requestlist(request):
     cList=[]
     for connection in connectionlist:
         if connection.receiver.username == receiver and connection.status=="Pending":
-            cList.append(connection.sender.username)
+            cList.append(Profile.objects.get(username=connection.sender.username))
 
     return render(request,"code/pendinglist.html",{'connectionlist':cList})
 
@@ -885,7 +896,30 @@ def retest(request,slug):
                     minutes+=1
                     seconds=seconds-60
                 txt=f"you have recently applied for this test please wait for {days} days {hours}h {minutes}m {seconds}s and try again"
-                return render(request,"code/dub.html",{"txt":txt})
+                print("!!!!")
+                stri=str(s)
+                mon=""
+                year=""
+                if stri[5:7]=="02":
+                    mon="Mar"
+                elif stri[5:7]=="03":
+                    mon="Apr"
+                elif stri[5:7]=="04":
+                    mon="May"
+                elif stri[5:7]=="05":
+                    mon="Jun"
+                elif stri[5:7]=="06":
+                    mon="Jul"
+                elif stri[5:7]=="07":
+                    mon="Aug"
+                
+                day=stri[8:10]
+                ss=int(day)-1
+                year=f"{mon} {ss}, {stri[:4]} {stri[11:19]:}"
+
+                # year=f"{stri[:4]}"
+                # print(stri[5:7])
+                return render(request,"code/dub.html",{"txt":txt,"year":year})
             
 
         else:

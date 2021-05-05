@@ -1,6 +1,140 @@
 {% extends 'base.html' %}
 {% block body %}
+
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+ 
+  .card {
+
+    height: 390px;
+    width: 300px;
+    border-radius: 15px;
+    perspective: 1000px;
+    background-color:#31354e;
+    margin-bottom: 10%;
+  }
+  .img-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 200px;
+  }
+  h, h1, h2 {
+    padding:0;
+    margin:0;
+  }
+  h {
+    font-size: 1.3em;
+    font-weight: 600;
+    color: #dfdfe2;
+    text-transform: capitalize;
+  }
+  h1 {
+    font-size: 0.9em;
+    font-weight: 600;
+    color: #72758e;
+    text-transform: uppercase;
+  }
+  p {
+    color:#dfdfe2;
+    font-size: 0.9em;
+    max-width: 70%;
+    text-align: center;
+    padding: 10px;
+  }
+  
+  h2 {
+    color: #31354e;
+    font-size: 1em;
+
+    font-weight: 600;
+  }
+  h2, p1 {
+    padding: 5px;
+  }
+  
+  #profile {
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    box-shadow:  23px 23px 46px #252736,
+               -23px -23px 46px #31354a;
+    transition: all .4s ease;
+  }
+  #profile:hover {
+    filter: saturate(2);
+  }
+  .about {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  p1 {
+    color: #C0C0C0;
+    font-size: 1em;
+  }
+</style>
 <div class="container my-3">
+    <div class="row">
+      {% if connectionlist %}
+      {% for bud in connectionlist %}
+   
+        <div class="col col-xs-12 col-sm-12 col-md-6 col-lg-4">
+          
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                  <div class="img-wrapper">
+                    <img src={{bud.dplink}} id="profile">
+                  </div>
+                  <div class="about">
+                    <h>{{bud}}</h>
+                    <h1>{{bud.email}}</h1>
+                    <p>{{bud.receiver.category}}</p>
+                  </div>
+                  <div style="text-align:center">
+                    <a style="width:100px" class="btn btn-success" id="demo" href="acceptrequest/{{bud}}" >Accept</a>
+                    <a style="width:100px" class="btn btn-danger" id="demo" href="declinerequest/{{bud}}">Reject</a>
+                    <a style="margin-top:10px" class="btn btn-primary" href="bud/{{bud}}">view Profile</a>
+                  </div>
+                </div>
+            </div>
+        </div>    
+   
+  
+{% endfor %}
+{% else %}
+<h3>No Pending Request at the movement</h3>
+{% endif %}
+
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ <!-- <div class="container my-3">
   you have these many connection request<br>
   {% for connection in connectionlist %}
     {{connection}} <a href="acceptrequest/{{connection}}" class="btn btn-success"><span class="material-icons">
@@ -11,6 +145,25 @@
   {% endfor %}
 
     <a class="btn btn-outline-info" href="{% url 'profile' %}">go back to your profile</a>
-</div>
+</div> -->
+   
+   <!-- <div class="w3-container">
+
+    {% for connection in connectionlist %}
+    <div class="w3-card-4 w3-dark-grey" style="width:30%">
   
+      <div class="w3-container w3-center">
+        <h3>Friend Request</h3>
+        <img src="img_avatar3.png" alt="Avatar" style="width:80%">
+        <h5>John Doe</h5>
+  
+        <div class="w3-section">
+          <button class="w3-button w3-green">Accept</button>
+          <button class="w3-button w3-red">Decline</button>
+        </div>
+      </div>
+      
+    </div>
+    {% endfor %}
+  </div> -->
   {% endblock %}

@@ -1,5 +1,10 @@
 {% extends 'base.html' %}
 {% block body %}
+<style>
+  body{
+    background-color:#d5d9e0;
+  }
+</style>
 <div class="container my-3">
   <div class="row">
     <div class="col-sm">
@@ -7,7 +12,9 @@
 
       <img src={{user.dplink}}
         alt="">
-      <a href="{% url 'uploaddp' %}" style="margin-left: 100px;">upload new dp</a>
+     {% if root %}
+        <a href="{% url 'uploaddp' %}" style="margin-left: 100px;">upload new dp</a>
+        {% endif %}
     </div>
     <div class="col-sm">
       <br>
@@ -29,6 +36,8 @@
         </div>
       </div>
     </div>
+    
+    {% if root %}
     <div class="col-sm">
       <a class="btn btn-outline-dark" href="/apply" style="
       margin-bottom: 10px;  ">Apply For Jobs</a><br>
@@ -41,6 +50,7 @@
     </div>
 
   </div>
+
   <div class="row">
     <div class="col-sm">
       <br>
@@ -65,7 +75,9 @@
     {% endfor %}
     </div>
   </div>
+  {% endif %}
 </div>
+
 {% endblock %}
 
 

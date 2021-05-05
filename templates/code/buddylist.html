@@ -1,46 +1,150 @@
 {% extends 'base.html' %}
 {% block body %}
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+  body{
+    background-color:#bcc4d1;
+}
+  .card {
+
+    height: 390px;
+    width: 300px;
+    border-radius: 15px;
+    perspective: 1000px;
+    background-color:#31354e;
+    margin-bottom: 10%;
+  }
+  .img-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 200px;
+  }
+  h, h1, h2 {
+    padding:0;
+    margin:0;
+  }
+  h {
+    font-size: 1.3em;
+    font-weight: 600;
+    color: #dfdfe2;
+    text-transform: capitalize;
+  }
+  h1 {
+    font-size: 0.9em;
+    font-weight: 600;
+    color: #72758e;
+    text-transform: uppercase;
+  }
+  p {
+    color:#dfdfe2;
+    font-size: 0.9em;
+    max-width: 70%;
+    text-align: center;
+    padding: 10px;
+  }
+  
+  h2 {
+    color: #31354e;
+    font-size: 1em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  h2, p1 {
+    padding: 5px;
+  }
+  
+  #profile {
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    box-shadow:  23px 23px 46px #252736,
+               -23px -23px 46px #31354a;
+    transition: all .4s ease;
+  }
+  #profile:hover {
+    filter: saturate(2);
+  }
+  .about {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  p1 {
+    color: #C0C0C0;
+    font-size: 1em;
+  }
+</style>
 <div class="container my-3">
+ 
+  {% if buddy or pending_list %}
     <div class="row">
         {% for bud in buddy%} 
    
-        <div class="col col-xs-12 col-sm-12 col-md-6 col-lg-6">
-
+        <div class="col col-xs-12 col-sm-12 col-md-6 col-lg-4">
+          
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
-
-                    <h5 class="card-title">{{bud.name}}</h5>
+                  <div class="img-wrapper">
+                    <img src={{bud.dplink}} id="profile">
+                  </div>
+                  <div class="about">
+                    <h>{{bud.name}}</h>
+                    <h1>{{bud.email}}</h1>
+                    <p>{{bud.receiver.category}}</p>
+                  </div>
+                  <div style="text-align:center">
+                    <a class="btn btn-success" id="demo" href="/sendrequest/{{bud.username}}/{{sub}}">Connect</a>
                     <a class="btn btn-primary" href="/bud/{{bud.username}}">view Profile</a>
-                    <p class="card-text">{{bud.email}};</p>
-                    <p class="card-text">{{bud.category}}<p>
-                    <a class="btn btn-outline-success" id="demo" href="/sendrequest/{{bud.username}}/{{sub}}">Connect</a>
+                  </div>
                 </div>
             </div>
         </div>    
+   
   
 {% endfor %}
 
 
 {% for bud in pending_list %} 
-   
-        <div class="col col-xs-12 col-sm-12 col-md-6 col-lg-6">
 
-            <div class="card" style="width: 18rem;">
-                <div class="card-body">
+<div class="col col-xs-12 col-sm-12 col-md-6 col-lg-4">
+          
+  <div class="card" style="width: 18rem;">
+      <div class="card-body">
+        <div class="img-wrapper">
+          <img src={{bud.dplink}} id="profile">
+        </div>
+        <div class="about">
+          <h>{{bud.name}}</h>
+          <h1>{{bud.email}}</h1>
+          <p>{{bud.receiver.category}}</p>
+        </div>
+        <div style="text-align:center">
+          <a class="btn btn-danger" id="demo" href="/cancelrequest/{{bud.username}}/{{sub}}">Remove connection</a>
+          <a class="btn btn-primary" href="/bud/{{bud.username}}">view Profile</a>
+        </div>
+      </div>
+  </div>
+</div>    
 
-                    <h5 class="card-title">{{bud.name}}</h5>
-                    <a class="btn btn-primary" href="/bud/{{bud.username}}">view Profile</a>
-                    <p class="card-text">{{bud.email}};</p>
-                    <p class="card-text">{{bud.category}}<p>
-                    <a class="btn btn-outline-danger" id="demo" href="/cancelrequest/{{bud.username}}/{{sub}}">Remove connection</a>
-                </div>
-            </div>
-        </div>    
+
   
 {% endfor %}
+{% else %}
+<h3>No Buddies in your category</h3>
+{% endif %}
 </div>
 
 </div>
 
 
 {% endblock %}
+
+
+
+
+
+
+

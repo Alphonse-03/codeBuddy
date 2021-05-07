@@ -1,5 +1,15 @@
 {% extends 'base.html' %}
 {% block body %}
+<style>
+    body{
+        background-color:#d9dfdc;
+        
+    }
+.card{
+    background-color:#e6e3dc;
+    margin-top: 25px;
+    
+}</style>
 <div class="container my-3">
     <div class="row">
         {% if job %}
@@ -10,14 +20,15 @@
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
 
+                    <img style="border-radius: 50%; height: 100px;width:100px; margin-left:60px;" src="{{j.ApplyingTo.dplink}}" alt="">
                     <h5 class="card-title">{{j.ApplyingTo.companyname}}</h5>
-                    <p class="card-text">{{j.ApplyingTo.jTitle}};</p>
+                    <p class="card-text">{{j.ApplyingTo.jTitle}}</p>
                     <p class="card-text">{{j.ApplyingTo.location}}<p>
                     <a class="btn btn-outline-success" id="demo" href="viewdetail/{{j.ApplyingTo.id}}">View Job</a>
                 </div>
             </div>
         </div>    
-  
+   
 {% endfor %}
 {% else %}
 <h4>No pending job Request</h4>

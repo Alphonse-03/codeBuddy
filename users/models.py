@@ -13,7 +13,7 @@ class Profile(models.Model):
     email=models.CharField(max_length=40)
     username=models.CharField(max_length=30,unique=True)
     dp = models.FileField(upload_to='dp/',default='/media/default.png')
-    dplink = models.CharField(max_length=70,default='/media/default.png')
+    dplink = models.CharField(max_length=700,default='/media/default.png')
     
    
     def __str__(self):
@@ -24,7 +24,7 @@ class Profile(models.Model):
 class CustomUser(AbstractUser):
     is_recruiter=models.BooleanField(default=False)
     dp = models.FileField(upload_to='dp/',default='/media/default.png')
-    dplink = models.CharField(max_length=70,default='/media/default.png')
+    dplink = models.CharField(max_length=700,default='/media/default.png')
 
 class JobProfile(models.Model):
     idno=models.AutoField(primary_key=True)
@@ -47,8 +47,8 @@ class JobPortal(models.Model):
   
     expectedSalary=models.CharField(max_length=20,blank=True,default="Declined to say")
     is_verified=models.BooleanField(default=False,blank=True)
-    dp = models.FileField(upload_to='dp/',default='/media/default.png')
-    dplink = models.CharField(max_length=70,default='/media/default.png')
+    dp = models.FileField(upload_to='dp/',default='https://visualpharm.com/assets/195/Company-595b40b75ba036ed117d5a01.svg')
+    dplink = models.CharField(max_length=700,default='https://visualpharm.com/assets/195/Company-595b40b75ba036ed117d5a01.svg')
     id = models.UUIDField(
          primary_key = True,
          default = uuid.uuid4,

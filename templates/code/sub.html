@@ -1,6 +1,14 @@
 {% extends 'jobbase.html' %}
 {% block body %}
+<div class="container">
+    <div class="card">
+<h1><strong>You have successfully logged into Job Portal Section:</strong></h1>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3 style="color: black;">You can't post your job openings and our Team will get it verified and once it has been verified we will be making those job requests public !</h2>
+<p>&nbsp;</p>
+</div>
 
-{{txt}}
-<a class="btn btn-outline-dark" href="{% url 'jprofile' %}">Take me to profile</a><br>
+<a class="btn btn-outline-dark" style="margin-left:600px; margin-top:20px" href="{% url 'jprofile' %}">Take me to profile</a><br>
+</div>
 {% endblock %}

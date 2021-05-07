@@ -1,8 +1,20 @@
 {% extends 'base.html' %}
 {% block body %}
+<style>
+    body{
+        background-color:#d9dfdc;
+        
+    }
+.card{
+    background-color:#e6e3dc;
+    margin-top: 25px;
+    
+}</style>
 <div class="container my-3">
-    <a class="btn btn-outline-dark" id="demo" href="jrequest">See Job Requests</a>
-<a class="btn btn-outline-dark" id="demo" href="lresponse">See your Last Requests </a>
+    <div style="margin-left: 30%;">
+    <a class="btn btn-outline-dark" id="demo" style="margin-right: 20px; margin-top:10px;" href="jrequest">See Job Requests</a>
+<a class="btn btn-outline-dark" id="demo" style=" margin-top:10px;"  href="lresponse">See your Last Requests </a>
+</div>
     <div class="row">
         {% for job in jobs %} 
    
@@ -10,12 +22,13 @@
 
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
-
+                    <img style="border-radius: 50%; height: 100px;width:100px; margin-left:60px;;  " src="{{job.dplink}}" alt="" srcset="">
                     <h5 class="card-title">{{job.companyname}}</h5>
                     <p class="card-text">Role:{{job.jTitle}}</p>
                     <p class="card-text">Location:{{job.location}}<p>
                     <p class="card-text">Number of Applicants:{{job.noOfApplicants}}<p></p>
-                    <a class="btn btn-outline-info" id="demo" href="/applyto/{{job.id}}">Easy Apply</a>
+                    <p class="card-text">Expected Salary  :  {{job.expectedSalary}}</p>
+                    <a class="btn btn-info" style="margin-left: 25%;" id="demo" href="/applyto/{{job.id}}">Easy Apply</a>
                 </div>
             </div>
         </div>    

@@ -23,14 +23,17 @@ def uploaddp(request):
             fs = FileSystemStorage()
             filename = fs.save(myfile.name, myfile)
             uploaded_file_url = fs.url(filename)
-            Profile.objects.filter(username=request.user).update(dp=uploaded_file_url,dplink=uploaded_file_url)
+            
             CustomUser.objects.filter(username=request.user).update(dp=uploaded_file_url,dplink=uploaded_file_url)
             # jj.save()
             # applicantss=int(applicants)+1
             # JobPortal.objects.filter(id=slug).update(noOfApplicants=applicantss)
             # messages.success(request,"Applied Successfully")
-  
-            return redirect("profile")
+            if request.user.is_recruiter==False:
+                Profile.objects.filter(username=request.user).update(dp=uploaded_file_url,dplink=uploaded_file_url)
+                return redirect("profile")
+            else:
+                return redirect("jprofile")
     return render(request,"code/uploaddp.html")
 
 
@@ -171,7 +174,14 @@ def seeapplicants(request,slug):
 
     return render(request,"code/japplicants.html",{"ppl":ppl,"slug":slug})
 
+def viewdetailr(request,slug):
+    job=JobPortal.objects.get(id=slug)
 
+    ver=False
+    if job.is_verified==True:
+        ver=True
+    return render(request,"code/viewdetail3.html",{'job':job,'veri':ver}) 
+  
 def jprofile(request):
     name=request.user
     verifiedJobs=[]
@@ -248,7 +258,7 @@ def jobDeclaration(request):
         filename = fs.save(myfile.name, myfile)
         uploaded_file_url = fs.url(filename)
     
-        CustomUser.objects.filter(username=request.user).update(dp=uploaded_file_url,dplink=uploaded_file_url)
+      
         if form.is_valid():
             qdict=form.data
             jd=qdict.get("jobDescription")
@@ -256,7 +266,7 @@ def jobDeclaration(request):
             if expectedSalary:
                 JobPortal(name=name,companyname=companyname,jobDescription=jd,expectedSalary=expectedSalary,jTitle=jr,location=jl,dp=uploaded_file_url,dplink=uploaded_file_url).save()
             else:
-                JobPortal(name=name,companyname=companyname,jobDescription=jd,jTitle=jr,location=jl).save()
+                JobPortal(name=name,companyname=companyname,jobDescription=jd,jTitle=jr,location=jl,dp=uploaded_file_url,dplink=uploaded_file_url).save()
             return render(request,"code/waiting.html")
 
     return render(request,'code/jobDeclaration.html',{'form':form})
@@ -612,6 +622,8 @@ def profile(request):
     #     'email':email,
     #     'category':category,
     # }
+    cus=CustomUser.objects.get(username=request.user).dplink
+
     user=Profile.objects.filter(username=request.user).get()
    
 
@@ -620,7 +632,7 @@ def profile(request):
     options = TestOptions.objects.all()
 
 
-    return render(request,"code/profile.html",{"user":user,"tests":tests,"options":options,'root':root})
+    return render(request,"code/profile.html",{"user":user,"tests":tests,"options":options,'root':root,'cus':cus})
 
 def buddylist(request,slug):
     username=request.user
@@ -731,6 +743,8 @@ def budprofile(request,slug):
 
     return render(request,"code/profile.html",{"user":bud,"tests":tests,"root":root})
 
+def aboutus(request):
+    return render(request,"code/aboutus.html")
 
 
 #done

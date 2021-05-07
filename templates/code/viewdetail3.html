@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block body %}
+<style>
+ 
+    .card{
+        background: rgb(235, 228, 228);
+        height: 100%;
+        margin-top: 30px;
+    }
+</style>
+<div class="container">
+    <div class="card">
+    Company Name:{{job.companyname}}<br>
+    Job Title:{{job.jTitle}}<br>
+    Location:{{job.location}}<br>
+    Job Discription:{{job.jobDescription|safe}} <br>
+    Expected Salary:{{job.expectedSalary}}<br>
+    {% if veri %}
+    <div style="display: inline; margin-left:350px;">
+    <a class="btn"  style="background-color: rgb(37, 18, 119); width:150px; margin-left:20px; height: 50px; padding-top:1.7%"  id="demo" href="/findppl/{{job.id}}"> <h6 style="color:white">Find People</h6></a>
+    <a class="btn"  style="background-color: rgb(37, 18, 119); width:150px; margin-left:20px; height: 50px; padding-top:1.7%" id="demo" href="/seeapplicants/{{job.id}}"><h6 style="color:white">See Applicants</h6></a>
+    <a class="btn" style="background-color: rgb(37, 18, 119); width:150px; margin-left:20px; height: 50px;padding-top:1%"  id="demo" href="/confirmedppl/{{job.id}}"><h6 style="color:white">See Confimed People</h6></a>
+</div>
+    {% endif %}
+   
+    
+    
+</div>
+   <a class="btn btn-info" style="width:100px"  href="/jprofile">Go Back</a><br>
+</div>
+</div>
+{% endblock %}
+

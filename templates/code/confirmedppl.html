@@ -1,25 +1,113 @@
 {% extends 'jobbase.html' %}
 {% block body %}
-<div class="container my-3">
-    <div class="row">
-        {% if confirmedppl %}
-        {% for confirm in confirmedppl %} 
-   
-        <div class="col col-xs-12 col-sm-12 col-md-6 col-lg-6">
-
-            <div class="card" style="width: 18rem;">
-                <div class="card-body">
-
-                    <h5 class="card-title">{{confirm.Applicants.username}}</h5>
-                    <a class="btn btn-primary" href="/bud/{{confirm.Applicants.username}}">view Profile</a>
-                    <p class="card-text">{{confirm.Applicants.email}};</p>
-                    
-                    <a class="btn btn-info" id="demo" href="/chat/{{confirm.Applicants.username}}">Message</a>
-                </div>
-            </div>
-        </div>    
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+    body{
+      background-color:#bcc4d1;
+  }
+    .card {
   
-{% endfor %}
+      height: 450px;
+      width: 300px;
+      border-radius: 15px;
+      perspective: 1000px;
+      background-color:#31354e;
+      margin-bottom: 10%;
+    }
+    .img-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 200px;
+    }
+    h, h1, h2 {
+      padding:0;
+      margin:0;
+    }
+    h {
+      font-size: 1.3em;
+      font-weight: 600;
+      color: #dfdfe2;
+      text-transform: capitalize;
+    }
+    h1 {
+      font-size: 0.9em;
+      font-weight: 600;
+      color: #72758e;
+      text-transform: uppercase;
+    }
+    p {
+      color:#dfdfe2;
+      font-size: 0.9em;
+      max-width: 70%;
+      text-align: center;
+      padding: 10px;
+    }
+    
+    h2 {
+      color: #31354e;
+      font-size: 1em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    h2, p1 {
+      padding: 5px;
+    }
+    
+    #profile {
+      height: 150px;
+      width: 150px;
+      border-radius: 50%;
+      box-shadow:  23px 23px 46px #252736,
+                 -23px -23px 46px #31354a;
+      transition: all .4s ease;
+    }
+    #profile:hover {
+      filter: saturate(2);
+    }
+    .about {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    p1 {
+      color: #C0C0C0;
+      font-size: 1em;
+    }
+  </style>
+  <div class="container my-3">
+
+      <div class="row">
+          {% if confirmedppl %}
+          {% for confirm in confirmedppl %} 
+     
+          <div class="col col-xs-12 col-sm-12 col-md-6 col-lg-4">
+            
+              <div class="card" style="width: 18rem;">
+                  <div class="card-body">
+                    <div class="img-wrapper">
+                      <img style="width: 200px; height:150px; border-radius:50%" src="{{confirm.Applicants.dplink}}">
+                    
+                    </div>
+                    <div class="about">
+                      <h>{{confirm.Applicants.username}}</h>            
+                      <p class="card-text">{{confirm.Applicants.email}};</p>
+                    </div>
+                    <a class="btn btn-primary"  style="margin-left:25px; width:200px; margin-bottom:10px;" href="/bud/{{confirm.Applicants.username}}">view Profile</a>
+                    <a class="btn btn-primary" style="margin-left:25px;width: 200px;" id="demo" href="/chat/{{confirm.Applicants.username}}">Message</a>
+                    </div>
+                    
+                  </div>
+                  
+              </div>
+     
+          </div>    
+          
+    
+  {% endfor %}
+
 {% else %}
 <h3>No Confirmed People</h3>
 {% endif %}
@@ -27,3 +115,6 @@
 
 </div>
 {% endblock %}
+
+
+

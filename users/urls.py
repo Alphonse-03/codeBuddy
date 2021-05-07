@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 urlpatterns = [
-   
+    path('aboutus',views.aboutus,name="aboutus"),
     path('',views.home,name="home"),
     path('timeline',views.timeline,name="timeline"),
     path('test/<str:slug>',views.test,name="test"),
@@ -41,6 +41,7 @@ urlpatterns = [
     path('applyto/<str:slug>',views.applyto,name="applyto"),
     path('jrequest',views.jrequest,name="jrequest"),
     path('lresponse',views.lresponse,name="lresponse"),
+    path('viewdetailr/<str:slug>',views.viewdetailr,name="viewdetailr"),
     path('viewdetail/<str:slug>',views.viewdetail,name="viewdetail"),
     path('viewdetail2/<str:slug>',views.viewdetail2,name="viewdetail2"),
     path('viewdetailaccept/<str:slug>',views.viewdetailaccept,name="viewdetailaccept"),

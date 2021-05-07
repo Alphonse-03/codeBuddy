@@ -10,10 +10,16 @@
     <div class="col-sm">
 
 
-      <img src={{user.dplink}}
-        alt="">
+      
      {% if root %}
+     <img src={{cus}}
+        alt="">
         <a href="{% url 'uploaddp' %}" style="margin-left: 100px;">upload new dp</a>
+        
+        {% else %}
+     <img src={{user.dplink}}
+        alt="">
+        
         {% endif %}
     </div>
     <div class="col-sm">
@@ -77,6 +83,41 @@
   </div>
   {% endif %}
 </div>
+<footer class="site-footer" style="background-color:black">
+  <div class="container" >
+    <div class="row">
+      <div class="col-sm-12 col-md-6" style="margin-top: 30px;">
+        <h6 style="color:white">About</h6>
+      </div>
+
+      <div class="col-md-4 col-sm-6 col-xs-12" style="margin-left:14%; margin-top:55px">
+        
+         <a href="https://www.facebook.com/alphonse.prakash.1"><img style="width: 40px; height:40px;" src="https://img.icons8.com/doodle/48/000000/facebook-new.png"/></a>
+          
+         <a href="https://github.com/Alphonse-03/codebuddy"><img style="width: 40px; height:40px;" src="https://img.icons8.com/fluent/48/000000/github.png"/></a>
+          <a  href="https://www.linkedin.com/in/alphonse-prakash-493b2a190/"><img style="width: 40px; height:40px;" src="https://img.icons8.com/doodle/48/000000/linkedin-circled.png"/></a>   
+       
+      </div>
+      <p style="color:white" class="text-justify">Codebuddy.com is an initiative to help people come from different backgrounds and skillsets to get social and code in a group and grow not as an individual but as a team. This initiative will inculcate the spirit of group work and will promote self-taught developers to get a peer support for free. We have lot of Startups hiring for young talent where you can just apply with a single tap so it's no hassle to go through the tedious task of applying. So what are you thinking Sign up Today and get social with like-minded people. </p>
+
+     
+    </div>
+    <hr>
+  </div>
+</div>
+</div>
+  <div class="container">
+    <div class="row">
+      <!-- <div class="col-md-8 col-sm-6 col-xs-12"> -->
+        <p style="text-align:center;color:white">Copyright &copy; 2021 All Rights Reserved by CodeBuddy
+ 
+        </p>
+      <!-- </div> -->
+
+     
+    
+
+</footer>
 
 {% endblock %}
 

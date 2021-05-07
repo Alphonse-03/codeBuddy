@@ -1,25 +1,145 @@
 {% extends 'jobbase.html' %}
 {% block body %}
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+  body{
+    background-color:#bcc4d1;
+}
+  .card {
+
+    height: 600px;
+    width: 300px;
+    border-radius: 15px;
+    perspective: 1000px;
+    background-color:#31354e;
+    margin-bottom: 10%;
+  }
+  .img-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 200px;
+  }
+  h, h1, h2 {
+    padding:0;
+    margin:0;
+  }
+  h {
+    font-size: 1.3em;
+    font-weight: 600;
+    color: #dfdfe2;
+    text-transform: capitalize;
+  }
+  h1 {
+    font-size: 0.9em;
+    font-weight: 600;
+    color: #72758e;
+    text-transform: uppercase;
+  }
+  p {
+    color:#dfdfe2;
+    font-size: 0.9em;
+    max-width: 70%;
+    text-align: center;
+    padding: 10px;
+  }
+  
+  h2 {
+    color: #31354e;
+    font-size: 1em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  h2, p1 {
+    padding: 5px;
+  }
+  
+  #profile {
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    box-shadow:  23px 23px 46px #252736,
+               -23px -23px 46px #31354a;
+    transition: all .4s ease;
+  }
+  #profile:hover {
+    filter: saturate(2);
+  }
+  .about {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  p1 {
+    color: #C0C0C0;
+    font-size: 1em;
+  }
+</style>
+<div class="container my-3">
+  <div class="row" style="margin-bottom: 100px; margin-top:30px;">
+    <div class="col-sm">
+    <img src="{{user.dplink}}" style="height: 250px; width:300px; border-radius:50%" alt="">
+    <a href="{% url 'uploaddp' %}" style="margin-left: 100px;">upload new dp</a>
+    </div>
+    <div class="col-sm">
+      <h3><b> Name : {{user.username}}</b></h3>
+      <table style="margin-top:20px">
+        <tr >
+          <td style="padding-right: 30px; font-size:20px;"><b> Jobs Verified</b></td>
+          <td style="font-size:20px;"><b>Jobs Pending</b> </td>
+        </tr>
+        <tr>
+          <td style="text-align: center;"><b>{{verifiedJobs|length}}</b> </td>
+          <td style="text-align: center;"><b>{{pendingJobs|length}}</b> </td>
+        </tr>
+      </table>
+      </div>
+      <div class="col-sm">
+      <a class="btn btn-outline-dark" href="{% url 'jobDeclaration' %}">Add a Job!</a><br>
+        </div>
+    </div>
+    <hr>
+    <hr>
+    <hr>
+    <div class="row" style="margin-top:50px;">
+        {% if verifiedJobs %}
+        {% for v in verifiedJobs %}
+   
+        <div class="col col-xs-12 col-sm-12 col-md-6 col-lg-4">
+          
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                  <div class="img-wrapper">
+                    <img style="width: 200px; height:150px; border-radius:50%" src="{{v.dplink}}">
+                  
+                  </div>
+                  <div class="about">
+                    <h>{{v.companyname}}</h>
+                    <h1>{{v.jTitle}}</h1>
+                    <p>Location : {{v.location}}</p>
+                    <p>Expected Salary : {{v.expectedSalary}}</p>
+                  </div>
+                  <div style="text-align:center">
+                      <div style="display: inline;">
+                    <a class="btn btn-primary" style="width: 100px; text-align:center; border-radius:20%;  height: 80px; margin-left:10px; margin-top:10px"  href="/viewdetailr/{{v.id}}">View Details</a>
+                    <a class="btn btn-primary" style="width: 100px; text-align:center; border-radius:20%; height: 80px; margin-left:10px; margin-top:10px" id="demo" href="/findppl/{{v.id}}">Find People</a>
+                </div>
+                <div style="text-align:center">
+                    <a class="btn btn-primary" style="width: 100px; text-align:center; border-radius:20%; height: 80px; margin-left:10px; margin-top:10px" id="demo" href="/seeapplicants/{{v.id}}">See Applicants</a>
+                    <a class="btn btn-primary" style="width: 100px;  border-radius:20%; margin-left:10px; margin-top:10px" id="demo" href="/confirmedppl/{{v.id}}">See Confimed People</a>
+                </div>
+                  </div>
+                </div>
+            </div>
+        </div>    
+   
+  
+{% endfor %}
 
 
-<a class="btn btn-outline-dark" href="{% url 'jobDeclaration' %}">Add a Job!</a><br>
-<div class="w3-container">
 
-
-
-    {% if verifiedJobs %}
-    {% for v in verifiedJobs %}
-    <blockquote class="w3-panel w3-leftbar w3-light-grey">
-        companyname::::::::::::::::::::::::{{v.companyname}}<br>
-        job role::::::::::::::::::::::::::{{v.jTitle}}<br>
-        location::::::::::::::::::::::::::{{v.location}}<br>
-        jobDescription:::::::::::::::::::::{{v.jobDescription|safe}}<br>
-        salary::::::::::::::::::::::::{{v.expectedSalary}}<br>
-        <a class="btn btn-info" id="demo" href="/findppl/{{v.id}}">Find People</a>
-        <a class="btn btn-info" id="demo" href="/seeapplicants/{{v.id}}">See Applicants</a>
-        <a class="btn btn-info" id="demo" href="/confirmedppl/{{v.id}}">See Confimed People</a>
-    </blockquote>
-    {% endfor %}
     {% else %}
     Sorry,No verified Job Exists
     {% endif %}
@@ -30,22 +150,37 @@
 
 
 
-
-
-
+<hr>
     {% if pendingJobs %}
     
-pendingJobs :----
+<h3>pendingJobs :</h3><br>
 <br>
-    {% for v in pendingJobs %}
-    <blockquote class="w3-panel w3-leftbar w3-light-grey">
-        companyname::::::::::::::::::::::::{{v.companyname}}<br>
-        job role::::::::::::::::::::::::::{{v.jTitle}}<br>
-        location::::::::::::::::::::::::::{{v.location}}<br>
-        jobDescription:::::::::::::::::::::{{v.jobDescription|safe}}<br>
-        salary::::::::::::::::::::::::{{v.expectedSalary}}<br>
-    </blockquote>
-    {% endfor %}
+{% for v in pendingJobs %}
+   
+<div class="col col-xs-12 col-sm-12 col-md-6 col-lg-4">
+  
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+          <div class="img-wrapper">
+            <img style="width: 200px; height:150px; border-radius:50%" src="{{v.dplink}}">
+          
+          </div>
+          <div class="about">
+            <h>{{v.companyname}}</h>
+            <h1>{{v.jTitle}}</h1>
+            <p>Location : {{v.location}}</p>
+            <p>Expected Salary : {{v.expectedSalary}}</p>
+          </div>
+          <div style="text-align:center">
+            <a class="btn btn-primary" href="/viewdetailr/{{v.id}}">View Details</a>
+       
+          </div>
+        </div>
+    </div>
+</div>    
+
+
+{% endfor %}
    
 
     {% endif %}
@@ -55,5 +190,40 @@ pendingJobs :----
 
 
 </div>
+<footer class="site-footer" style="background-color:black">
+  <div class="container" >
+    <div class="row">
+      <div class="col-sm-12 col-md-6" style="margin-top: 30px;">
+        <h6 style="color:white">About</h6>
+        <p style="color:white" class="text-justify">Codebuddy.com is an initiative to help people come from different backgrounds and skillsets to get social and code in a group and grow not as an individual but as a team. This initiative will inculcate the spirit of group work and will promote self-taught developers to get a peer support for free. We have lot of Startups hiring for young talent where you can just apply with a single tap so it's no hassle to go through the tedious task of applying. So what are you thinking Sign up Today and get social with like-minded people. </p>
+      </div>
+
+      <div class="col-md-4 col-sm-6 col-xs-12" style="margin-left:14%; margin-top:55px">
+        
+         <a href="https://www.facebook.com/alphonse.prakash.1"><img style="width: 40px; height:40px;" src="https://img.icons8.com/doodle/48/000000/facebook-new.png"/></a>
+          
+         <a href="https://github.com/Alphonse-03/codebuddy"><img style="width: 40px; height:40px;" src="https://img.icons8.com/fluent/48/000000/github.png"/></a>
+          <a  href="https://www.linkedin.com/in/alphonse-prakash-493b2a190/"><img style="width: 40px; height:40px;" src="https://img.icons8.com/doodle/48/000000/linkedin-circled.png"/></a>   
+       
+      </div>
+
+     
+    </div>
+    <hr>
+  </div>
+</div>
+</div>
+  <div class="container">
+    <div class="row">
+      <!-- <div class="col-md-8 col-sm-6 col-xs-12"> -->
+        <p style="text-align:center;color:white">Copyright &copy; 2021 All Rights Reserved by CodeBuddy
+ 
+        </p>
+      <!-- </div> -->
+
+     
+    
+
+</footer>
 
 {% endblock %}
